@@ -13,11 +13,22 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rooms = Room::all();
+        $rooms = Room::orWhere('site', $request->site)
+                     ->orWhere('building', $request->building)
+                     ->orWhere('floor_no', $request->floor_no)
+                     ->orWhere('type_of_bed', $request->type_of_bed)
+                      ->paginate(3);
 
-        return view ('dashboard', compact('rooms'));
+        return view('rooms.search', compact('rooms'));
+      
+    }
+
+    //booking function
+    public function book()
+    {
+        return view('rooms.book');
     }
 
     /**

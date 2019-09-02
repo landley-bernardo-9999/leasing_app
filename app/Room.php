@@ -13,7 +13,7 @@ class Room extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'room_no', 'site', 'building', 'floor_no','room_wing','room_status','room_size','type_of_bed','no_of_bed','short_term_rent','long_term_rent','transient_rent','room_description'
+        'room_no', 'site', 'building', 'floor_no','room_wing','room_status','room_size','type_of_bed','short_term_rent','long_term_rent','transient_rent','room_description'
     ];
 
 

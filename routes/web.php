@@ -32,6 +32,8 @@ Route::group(['middleware' => 'verified'], function(){
         'residents' => 'ResidentController',
     ]);
 
+    Route::get('book', 'RoomController@book');
+
 });
 
 

@@ -7,14 +7,8 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title text-center">Rooms</h5>
-                    <h1 class="card-text text-center">100</h1>
-                    <a href="#" class="text-center">Open</a>
-                    <ul>
-                        @foreach ($rooms as $item)
-                            <li><a href="/rooms/{{ $item->room_id }}">{{ $item->room_id }}</a></li>
-                        @endforeach
-                    </ul>
-                   
+                    <h1 class="card-text text-center">{{ $rooms->count() }}</h1>
+                    <a href="/book" class="text-center">Open</a>
                 </div>    
             </div>
         </div>
