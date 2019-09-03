@@ -14,12 +14,13 @@ class CreateResidentsTable extends Migration
     public function up()
     {
         Schema::create('residents', function (Blueprint $table) {
-            $table->uuid('resident_id')->primary();
-            $table->string('type_of_resident');
-            $table->string('birthdate')->nullable();
-            $table->string('gender')->nullable();
-            $table->string('civil_status')->nullable();
-        
+            $table->uuid('res_id')->primary();
+            $table->string('res_type');
+            $table->string('res_full_name');
+            $table->string('res_email')->unique();
+            $table->string('res_mobile')->unique();
+            $table->string('res_country');
+
             $table->timestamps();
         });
 

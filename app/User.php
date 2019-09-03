@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'password', 'role', 'mobile_number', 'user_resident_id_foreign','user_owner_id_foreign'
+        'name', 'username', 'email' ,'password', 'role', 'mobile_number'
     ];
 
     /**
@@ -45,8 +45,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function owner(){
-        return $this->hasOne(App\Owner);
+    public function rooms(){
+        return $this->hasMany(App\Room);
     }
 
     /**

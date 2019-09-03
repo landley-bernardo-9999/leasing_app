@@ -11,29 +11,33 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-city"></i></span>
                 </div>
-                 <select class="form-control" name="site" id="site">
-                    <option value="nc" >North Cambridge</option>
-                    <option value="cy" >Courtyards</option>
-                    <option value="mr" >Marthas Rooms</option>
+                <select class="form-control" name="site" id="site" onchange="filter(this.value)">
+                    @foreach ($site as $row)
+                    <option value="{{ $row->site }}">{{ $row->site }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-5">
             <label for="" class="text-primary">Building/Floor</label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-store-alt"></i></span>
                 </div>
-                <select class="form-control" name="building" id="building" >
-                    <option value="h">Harvard</option>
-                    <option value="p">Princeton</option>
-                    <option value="w">Wharton</option>
+                
+               
+                <select class="form-control" name="building" id="building" onchange="filter(this.value)">
+                    @foreach ($building as $row)
+                    <option value="{{ $row->building }}">{{ $row->building }}</option>
+                    @endforeach
                 </select>
+                
 
-                <select class="form-control" name="floor_no" id="floor_no">
-                    <option value="G">Ground</option>
-                    <option value="2">2nd Floor</option>
+               <select class="form-control" name="floor_no" id="floor_no" onchange="filter(this.value)">
+                    @foreach ($floor_no as $row)
+                    <option value="{{ $row->floor_no }}">{{ $row->floor_no }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -43,11 +47,12 @@
             <label for="" class="text-primary">Type of Bed</label>
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-users"></i></span>
+                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-bed"></i></span>
                 </div>
-                <select class="form-control" name="type_of_bed" id="type_of_bed">
-                    <option value="1SB">1 Single Bed</option>
-                    <option value="2SB">2 Single Bed</option>
+               <select class="form-control" name="type_of_bed" id="type_of_bed" onchange="filter(this.value)">
+                    @foreach ($type_of_bed as $row)
+                    <option value="{{ $row->type_of_bed }}">{{ $row->type_of_bed }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -68,7 +73,7 @@
     <br>
     <div class="row">
         <div class="col-md-12">
-            <button class="btn text-right" type="submit">Search</button>
+            <button class="btn text-right btn-primary" type="submit">Search</button>
         </div>
     </div>
 </form>

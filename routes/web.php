@@ -1,8 +1,5 @@
 <?php
 
-use App\Room;
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,8 +18,10 @@ Route::get('/', function () {
         return view('auth.login');
     }
     else
-        $rooms = Room::all();
-        return view('dashboard', compact('rooms'));
+        $rooms = App\Room::all();
+        $residents = App\Resident::all();
+        $owners = App\User::where('role', 'owner')->get();
+        return view('dashboard', compact('rooms', 'residents', 'owners'));
 });
 
 Route::group(['middleware' => 'verified'], function(){
@@ -30,9 +29,8 @@ Route::group(['middleware' => 'verified'], function(){
         'owners' => 'OwnerController',
         'rooms' => 'RoomController',
         'residents' => 'ResidentController',
+        'bookings' => 'BookingController',
     ]);
-
-    Route::get('book', 'RoomController@book');
 
 });
 

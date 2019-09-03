@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Owner;
+use App\Booking;
 use Illuminate\Http\Request;
+use App\Room;
 
-class OwnerController extends Controller
+class BookingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,12 @@ class OwnerController extends Controller
      */
     public function index()
     {
-        return Owner::all();
+        $building = Room::orderBy('building')->distinct()->get('building');
+        $floor_no = Room::orderBy('floor_no')->distinct()->get('floor_no');
+        $type_of_bed = Room::orderBy('type_of_bed')->distinct()->get('type_of_bed');
+        $site = Room::orderBy('site')->distinct()->get('site');
+
+        return view('booking.booking', compact('building', 'floor_no', 'type_of_bed','site'));
     }
 
     /**
@@ -41,21 +47,21 @@ class OwnerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Owner  $owner
+     * @param  \App\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function show(Owner $owner)
+    public function show(Booking $booking)
     {
-        
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Owner  $owner
+     * @param  \App\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function edit(Owner $owner)
+    public function edit(Booking $booking)
     {
         //
     }
@@ -64,10 +70,10 @@ class OwnerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Owner  $owner
+     * @param  \App\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Owner $owner)
+    public function update(Request $request, Booking $booking)
     {
         //
     }
@@ -75,10 +81,10 @@ class OwnerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Owner  $owner
+     * @param  \App\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Owner $owner)
+    public function destroy(Booking $booking)
     {
         //
     }

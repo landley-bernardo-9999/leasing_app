@@ -15,20 +15,17 @@ class RoomController extends Controller
      */
     public function index(Request $request)
     {
-        $rooms = Room::orWhere('site', $request->site)
-                     ->orWhere('building', $request->building)
-                     ->orWhere('floor_no', $request->floor_no)
-                     ->orWhere('type_of_bed', $request->type_of_bed)
-                      ->paginate(3);
+        $rooms = Room::where('site', $request->site)
+                     ->where('building', $request->building)
+                     ->where('floor_no', $request->floor_no)
+                     ->where('type_of_bed', $request->type_of_bed)
+                      ->paginate(10);
+
+        session(['check_in_date' => $request->check_in_date]);
+        session(['check_out_date'=> $request->check_out_date]);
 
         return view('rooms.search', compact('rooms'));
       
-    }
-
-    //booking function
-    public function book()
-    {
-        return view('rooms.book');
     }
 
     /**
@@ -60,7 +57,9 @@ class RoomController extends Controller
      */
     public function show($room_id)
     {
-        return Room::findOrFail($room_id);
+        $room = Room::findOrFail($room_id);
+
+        return view('rooms.booking-form',compact('room'));
     }
 
     /**

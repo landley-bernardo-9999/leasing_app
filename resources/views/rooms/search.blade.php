@@ -6,9 +6,9 @@
     {{ $rooms->links() }}
  @foreach ($rooms as $item)
     <div class="jumbotron">
-        <h1 class="display-6">{{ $item->floor_no }}-{{ $item->room_no }} {{ $item->room_wing }} ({{ $item->room_status }})</h1>
+        <h1 class="display-6">{{ $item->room_no }} {{ $item->room_wing }} ({{ $item->room_status }})</h1>
         <p class="lead">{{ $item->building }}</p>
-        <p class="lead">Good for {{ $item->no_of_bed }}</p>
+        <p class="lead">{{ $item->type_of_bed }}</p>
         <hr class="my-4">
         <p>Rate: LT ({{ number_format($item->long_term_rent,2) }}), ST ({{ number_format($item->short_term_rent,2) }}), Transient ({{ number_format($item->transient_rent,2) }})</p>
         <a class="btn btn-primary btn-md" href="/rooms/{{ $item->room_id }}" role="button">Book</a>

@@ -13,12 +13,12 @@ class Room extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'room_no', 'site', 'building', 'floor_no','room_wing','room_status','room_size','type_of_bed','short_term_rent','long_term_rent','transient_rent','room_description'
+        'room_no', 'enrollment_date', 'site', 'building', 'floor_no','room_wing','room_status','room_size','type_of_bed','short_term_rent','long_term_rent','transient_rent','room_description','own_id_foreign'
     ];
 
 
-    public function owners(){
-        return $this->hasMany(App\Owner);
+    public function user(){
+        return $this->belongsTo(App\User);
     }
 
     /**
