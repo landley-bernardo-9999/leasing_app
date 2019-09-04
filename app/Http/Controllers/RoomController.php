@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Room;
 use Illuminate\Http\Request;
 use DB;
+use App\Booking;
 
 class RoomController extends Controller
 {
@@ -15,16 +16,24 @@ class RoomController extends Controller
      */
     public function index(Request $request)
     {
-        $rooms = Room::where('site', $request->site)
+        if ($request->booking == null){
+            $rooms = Room::all();
+
+            return view('rooms.show-rooms', compact('rooms'));
+        }else{
+            $rooms = Room::where('site', $request->site)
                      ->where('building', $request->building)
                      ->where('floor_no', $request->floor_no)
                      ->where('type_of_bed', $request->type_of_bed)
-                      ->get();
+                     ->get();
 
-        session(['check_in_date' => $request->check_in_date]);
-        session(['check_out_date'=> $request->check_out_date]);
+            session(['check_in_date' => $request->check_in_date]);
+            session(['check_out_date'=> $request->check_out_date]);
 
-        return view('rooms.search', compact('rooms'));
+            return view('rooms.search', compact('rooms'));
+        }
+
+        
       
     }
 
@@ -59,7 +68,12 @@ class RoomController extends Controller
     {
         $room = Room::findOrFail($room_id);
 
-        return view('rooms.booking-form',compact('room'));
+        $bookings = DB::table('bookings')
+                        ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
+                        ->where('room_id_foreign', $room_id)
+                        ->get();
+
+        return view('rooms.booking-form',compact('room', 'bookings'));
     }
 
     /**

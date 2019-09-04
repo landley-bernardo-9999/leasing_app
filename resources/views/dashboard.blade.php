@@ -8,7 +8,8 @@
                 <div class="card-body">
                     <h5 class="card-title text-center">Rooms</h5>
                     <h1 class="card-text text-center">{{ $rooms->count() }}</h1>
-                    <a href="/bookings" class="text-center">Open</a>
+                    <a href="/bookings" class="text-center">Book</a>
+                    <a href="/rooms" class="text-center">Manage</a>
                 </div>    
             </div>
         </div>

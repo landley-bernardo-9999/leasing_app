@@ -67,6 +67,7 @@
                 </div>
                <input class="form-control" type="date" name="check_in_date" id="check_in_date">
                <input class="form-control" type="date" name="check_out_date" id="check_out_date">
+               <input class="form-control" type="hidden" name="booking" id="booking" value="booking">
             </div>        
         </div>      
     </div>
