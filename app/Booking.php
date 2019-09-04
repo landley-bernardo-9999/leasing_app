@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Webpatser\Uuid\Uuid;
 
 class Booking extends Model
 {
@@ -22,5 +23,26 @@ class Booking extends Model
 
     public function rooms(){
         return $this->belongsTo(App\Room);
+    }
+
+      /**
+     *  Setup model event hooks
+     */
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($model) {
+            $model->booking_id = (string) Uuid::generate(4);
+        });
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'booking_id';
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
         <p class="text-left">{{ $rooms->count() }} rooms found.</p>  
-    {{ $rooms->links() }}
+    {{-- {{ $rooms->links() }} --}}
  @foreach ($rooms as $item)
     <div class="jumbotron">
         <h1 class="display-6">{{ $item->room_no }} {{ $item->room_wing }} ({{ $item->room_status }})</h1>

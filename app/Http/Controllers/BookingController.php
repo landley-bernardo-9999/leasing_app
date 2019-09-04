@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Booking;
 use Illuminate\Http\Request;
 use App\Room;
+use App\Resident;
 
 class BookingController extends Controller
 {
@@ -41,7 +42,25 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $resident = new Resident();
+        $resident->res_type = 'primary';
+        $resident->res_full_name = $request->full_name;
+        $resident->res_email = $request->email;
+        $resident->res_mobile = $request->mobile;
+        $resident->res_country = $request->country;
+        $resident->save();
+ 
+        $booking = new Booking();
+        $booking->check_in_date = $request->check_in_date;
+        $booking->check_out_date = $request->check_out_date;
+        $booking->booking_term = $request->booking_term;
+        $booking->booking_status = 'active';
+        $booking->room_id_foreign = $request->room_id;
+        $booking->res_id_foreign = $resident->res_id;
+        $booking->save();
+ 
+        return redirect('/rooms/'.$request->room_id);
+
     }
 
     /**

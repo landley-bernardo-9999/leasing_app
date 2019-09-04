@@ -17,7 +17,7 @@ class CreateBookingsTable extends Migration
             $table->uuid('booking_id')->primary();
             $table->date('check_in_date');
             $table->date('check_out_date');
-            $table->date('actual_check_out_date');
+            $table->date('actual_check_out_date')->nullable();
             $table->string('booking_term');
             $table->string('booking_status');
             $table->integer('initial_water_reading')->nullable();
@@ -25,8 +25,8 @@ class CreateBookingsTable extends Migration
             $table->integer('initial_electric_reading')->nullable();
             $table->integer('final_electric_reading')->nullable();
 
-            $table->unsignedBigInteger('room_id_foreign');
-            $table->unsignedBigInteger('res_id_foreign');
+            $table->uuid('room_id_foreign');
+            $table->uuid('res_id_foreign');
 
             //assign the foreign keys
             $table->foreign('res_id_foreign')

@@ -19,7 +19,7 @@ class RoomController extends Controller
                      ->where('building', $request->building)
                      ->where('floor_no', $request->floor_no)
                      ->where('type_of_bed', $request->type_of_bed)
-                      ->paginate(10);
+                      ->get();
 
         session(['check_in_date' => $request->check_in_date]);
         session(['check_out_date'=> $request->check_out_date]);

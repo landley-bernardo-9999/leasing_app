@@ -19,11 +19,11 @@ class CreateRoomsTable extends Migration
             $table->string('room_no');
             $table->string('site');
             $table->string('building');
-            $table->string('floor_no');
+            $table->string('floor_no')->nullable();
             $table->string('room_wing')->nullable();
             $table->string('room_status')->default('VACANT');
             $table->double('room_size', 8, 2);
-            $table->string('type_of_bed');
+            $table->string('type_of_bed')->nullable();
             $table->double('short_term_rent', 8, 2);
             $table->double('long_term_rent', 8, 2);
             $table->double('transient_rent', 8, 2);
