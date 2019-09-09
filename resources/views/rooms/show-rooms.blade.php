@@ -24,33 +24,33 @@
     <div class="row">
             <h1>Harvard</h1>
               <div class="col-md-12">
-                    <p>{{ $rooms->count() }} units under leasing.</p>
-                                @foreach ($rooms->chunk(17) as $chunk)
+                    <p>{{ $harvard->count() }} units under leasing.</p>
+                    @foreach ($harvard->chunk(17) as $chunk)
                 <div class="row">
                     @foreach ($chunk as $room)
                     @if($room->room_status === 'OCCUPIED')
-                        <a href="/rooms/{{$room->room_id}}" class="btn btn-success" oncontextmenu="return false">
+                        <a title="{{ $room->room_wing }}" href="/rooms/{{$room->room_id}}" class="btn btn-success" oncontextmenu="return false">
                             <i class="fas fa-home fa-2x"></i>
                             <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
                                 <p style="font-size: 11px">{{$room->room_no}}</p>
                             </div>
                         </a>  
                     @elseif($room->room_status === 'VACANT')
-                        <a href="/rooms/{{$room->room_id}}" class="btn btn-danger" oncontextmenu="return false">
+                        <a title="{{ $room->room_wing }}" href="/rooms/{{$room->room_id}}" class="btn btn-danger" oncontextmenu="return false">
                             <i class="fas fa-home fa-2x"></i>
                             <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
                                 <p style="font-size: 11px">{{$room->room_no}}</p>
                             </div>
                         </a> 
                     @elseif($room->room_status === 'RESERVED')
-                        <a href="/rooms/{{$room->room_id}}" class="btn btn-warning" oncontextmenu="return false">
+                        <a title="{{ $room->room_wing }}"  href="/rooms/{{$room->room_id}}" class="btn btn-warning" oncontextmenu="return false">
                             <i class="fas fa-home fa-2x"></i>
                             <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
                                 <p style="font-size: 11px">{{$room->room_no}}</p>
                             </div>
                         </a> 
                     @elseif($room->room_status === 'RECTITICATION')
-                        <a href="/rooms/{{$room->room_id}}" class="btn btn-primary" oncontextmenu="return false">
+                        <a title="{{ $room->room_wing }}" href="/rooms/{{$room->room_id}}" class="btn btn-primary" oncontextmenu="return false">
                             <i class="fas fa-home fa-2x"></i>
                             <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
                                 <p style="font-size: 11px">{{$room->room_no}}</p>
@@ -64,6 +64,94 @@
                 @endforeach    
               </div>
     </div>
+
+    <div class="row">
+        <h1>Princeton</h1>
+          <div class="col-md-12">
+                <p>{{ $princeton->count() }} units under leasing.</p>
+                @foreach ($princeton->chunk(17) as $chunk)
+            <div class="row">
+                @foreach ($chunk as $room)
+                @if($room->room_status === 'OCCUPIED')
+                    <a href="/rooms/{{$room->room_id}}" class="btn btn-success" oncontextmenu="return false">
+                        <i class="fas fa-home fa-2x"></i>
+                        <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$room->room_no}}</p>
+                        </div>
+                    </a>  
+                @elseif($room->room_status === 'VACANT')
+                    <a href="/rooms/{{$room->room_id}}" class="btn btn-danger" oncontextmenu="return false">
+                        <i class="fas fa-home fa-2x"></i>
+                        <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$room->room_no}}</p>
+                        </div>
+                    </a> 
+                @elseif($room->room_status === 'RESERVED')
+                    <a href="/rooms/{{$room->room_id}}" class="btn btn-warning" oncontextmenu="return false">
+                        <i class="fas fa-home fa-2x"></i>
+                        <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$room->room_no}}</p>
+                        </div>
+                    </a> 
+                @elseif($room->room_status === 'RECTITICATION')
+                    <a href="/rooms/{{$room->room_id}}" class="btn btn-primary" oncontextmenu="return false">
+                        <i class="fas fa-home fa-2x"></i>
+                        <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                            <p style="font-size: 11px">{{$room->room_no}}</p>
+                        </div>
+                    </a> 
+                @endif
+                <span style="visibility: hidden">||</span> 
+                @endforeach
+            </div>
+            <br>
+            @endforeach    
+          </div>
+</div>
+
+<div class="row">
+    <h1>Wharton</h1>
+      <div class="col-md-12">
+            <p>{{ $wharton->count() }} units under leasing.</p>
+            @foreach ($wharton->chunk(17) as $chunk)
+        <div class="row">
+            @foreach ($chunk as $room)
+            @if($room->room_status === 'OCCUPIED')
+                <a href="/rooms/{{$room->room_id}}" class="btn btn-success" oncontextmenu="return false">
+                    <i class="fas fa-home fa-2x"></i>
+                    <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                        <p style="font-size: 11px">{{$room->room_no}}</p>
+                    </div>
+                </a>  
+            @elseif($room->room_status === 'VACANT')
+                <a href="/rooms/{{$room->room_id}}" class="btn btn-danger" oncontextmenu="return false">
+                    <i class="fas fa-home fa-2x"></i>
+                    <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                        <p style="font-size: 11px">{{$room->room_no}}</p>
+                    </div>
+                </a> 
+            @elseif($room->room_status === 'RESERVED')
+                <a href="/rooms/{{$room->room_id}}" class="btn btn-warning" oncontextmenu="return false">
+                    <i class="fas fa-home fa-2x"></i>
+                    <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                        <p style="font-size: 11px">{{$room->room_no}}</p>
+                    </div>
+                </a> 
+            @elseif($room->room_status === 'RECTITICATION')
+                <a href="/rooms/{{$room->room_id}}" class="btn btn-primary" oncontextmenu="return false">
+                    <i class="fas fa-home fa-2x"></i>
+                    <div style="display: flex; width: 30px; justify-content: space-around; margin-bottom:-60%">
+                        <p style="font-size: 11px">{{$room->room_no}}</p>
+                    </div>
+                </a> 
+            @endif
+            <span style="visibility: hidden">||</span> 
+            @endforeach
+        </div>
+        <br>
+        @endforeach    
+      </div>
+</div>
 </div>
 @endsection
 

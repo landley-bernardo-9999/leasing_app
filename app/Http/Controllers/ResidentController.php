@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Resident;
+use App\Room;
 use Illuminate\Http\Request;
+use App\Booking;    
 
 class ResidentController extends Controller
 {
@@ -78,8 +80,16 @@ class ResidentController extends Controller
      * @param  \App\Resident  $resident
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Resident $resident)
+    public function destroy(Request $request, $res_id)
     {
-        //
+        
+        Resident::where('res_id', $res_id)->delete();
+        Booking::where('res_id_foreign', $res_id)->delete();
+
+        Room::
+        where('room_id', $request->room_id)
+        ->update([
+                    'room_status' => 'VACANT'                    
+                ]);
     }
 }

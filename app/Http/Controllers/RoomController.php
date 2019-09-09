@@ -17,9 +17,13 @@ class RoomController extends Controller
     public function index(Request $request)
     {
         if ($request->booking == null){
-            $rooms = Room::all();
+            $harvard = Room::where('building', 'HARVARD')->get(['room_id', 'room_no', 'room_status', 'room_wing']);
+            $princeton = Room::where('building', 'PRINCETON')->get(['room_id', 'room_no', 'room_status', 'room_wing']);
+            $wharton = Room::where('building', 'WHARTON')->get(['room_id', 'room_no', 'room_status', 'room_wing']);
 
-            return view('rooms.show-rooms', compact('rooms'));
+            session(['booking' => 'false']);
+
+            return view('rooms.show-rooms', compact('harvard', 'princeton', 'wharton'));
         }else{
             $rooms = Room::where('site', $request->site)
                      ->where('building', $request->building)
@@ -27,6 +31,7 @@ class RoomController extends Controller
                      ->where('type_of_bed', $request->type_of_bed)
                      ->get();
 
+            session(['booking' => 'true']);
             session(['check_in_date' => $request->check_in_date]);
             session(['check_out_date'=> $request->check_out_date]);
 
@@ -66,14 +71,21 @@ class RoomController extends Controller
      */
     public function show($room_id)
     {
-        $room = Room::findOrFail($room_id);
+        if(session('booking') == 'false' || auth()->user()->role === 'owner'){
+            $room = Room::findOrFail($room_id);
 
-        $bookings = DB::table('bookings')
-                        ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
-                        ->where('room_id_foreign', $room_id)
-                        ->get();
+            $bookings = DB::table('bookings')
+                            ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
+                            ->where('room_id_foreign', $room_id)
+                            ->get();
 
-        return view('rooms.booking-form',compact('room', 'bookings'));
+            return view('rooms.show-bookings',compact('room', 'bookings'));
+        }
+        else{
+            $room = Room::findOrFail($room_id);
+            return view('rooms.booking-form',compact('room'));
+        }
+       
     }
 
     /**

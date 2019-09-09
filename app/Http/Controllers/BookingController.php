@@ -43,9 +43,7 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        DB::beginTransaction();
-
-        try {
+      
             
             $resident = new Resident();
             $resident->res_type = 'primary';
@@ -70,14 +68,17 @@ class BookingController extends Controller
                         'room_status' => 'OCCUPIED'                    
                     ]);
 
-            DB::commit();
-            // all good
-        } catch (\Exception $e) {
-            DB::rollback();
-            // something went wrong
-        }
-       
-        return redirect('/rooms/'.$request->room_id);
+        session()->forget('check_in_date');
+        session()->forget('check_out_date');
+
+        $room = Room::findOrFail($request->room_id);
+
+        $bookings = DB::table('bookings')
+                        ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
+                        ->where('room_id_foreign', $request->room_id)
+                        ->get();
+
+        return view('rooms.show-bookings',compact('room', 'bookings'));
 
     }
 
@@ -89,7 +90,13 @@ class BookingController extends Controller
      */
     public function show($booking_id)
     {
-        return view('bookings.show-booking');
+        $booking = DB::table('bookings')
+                        ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
+                        ->join('rooms','bookings.room_id_foreign', 'rooms.room_id')
+                        ->where('booking_id', $booking_id)
+                        ->get();
+
+        return view('bookings.show-booking-detail', compact('booking'));
     }
 
     /**
@@ -123,6 +130,6 @@ class BookingController extends Controller
      */
     public function destroy($booking_id)
     {
-        return 'this ie for deleting.';
+
     }
 }

@@ -17,8 +17,8 @@
         <div class="col-sm-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Residents</h5>
-                    <h1 class="card-text text-center">{{ $residents->count() }}</h1>
+                    <h5 class="card-title text-center">Bookings</h5>
+                    <h1 class="card-text text-center">{{ $bookings->count() }}</h1>
                     <a href="#" class="text-center">Open</a>
                 </div>
             </div>

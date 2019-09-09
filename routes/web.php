@@ -17,11 +17,23 @@ Route::get('/', function () {
     if(Auth::guest()){
         return view('auth.login');
     }
-    else
-        $rooms = App\Room::all();
-        $residents = App\Resident::all();
-        $owners = App\User::where('role', 'owner')->get();
-        return view('dashboard', compact('rooms', 'residents', 'owners'));
+    else{
+        if(auth()->user()->role === 'admin'){
+            $rooms = App\Room::all();
+            $bookings = App\Booking::all();
+            $owners = App\User::where('role', 'owner')->get();
+            return view('dashboard', compact('rooms', 'bookings', 'owners'));
+        }elseif(auth()->user()->role === 'owner'){
+            
+            $rooms = DB::table('rooms')
+                ->join('users', 'rooms.own_id_foreign', 'users.user_id')
+                ->where('own_id_foreign', auth()->user()->user_id)
+                ->get();
+
+            return view('owners.dashboard', compact('rooms'));
+        }
+    }
+       
 });
 
 Route::group(['middleware' => 'verified'], function(){

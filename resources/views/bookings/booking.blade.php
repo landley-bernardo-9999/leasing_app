@@ -67,14 +67,14 @@
                 </div>
                <input class="form-control" type="date" name="check_in_date" id="check_in_date">
                <input class="form-control" type="date" name="check_out_date" id="check_out_date">
-               <input class="form-control" type="hidden" name="booking" id="booking" value="booking">
+               <input class="form-control" type="hidden" name="booking" id="booking" value="true">
             </div>        
         </div>      
     </div>
     <br>
     <div class="row">
         <div class="col-md-12">
-            <button class="btn text-right btn-primary" type="submit">Search</button>
+            <button class="btn text-right btn-primary" type="submit"><i class="fas fa-search"></i> Search</button>
         </div>
     </div>
 </form>
