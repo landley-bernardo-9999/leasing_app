@@ -101,15 +101,15 @@
                             <table class="table table-borderless">
                                  <tr>
                                     <td>Security Deposit</td>
-                                    <td> <input id="sec_dep" name="sec_dep" type="number" class="form-control"></td>
+                                    <td> <input onkeyup="select_term()" id="sec_dep" name="sec_dep" type="text" class="form-control"></td>
                                 </tr>
                                 <tr>
                                     <td>Utilities Deposit</td>
-                                    <td> <input id="util_dep" name="util_dep" type="number" class="form-control"></td>
+                                    <td> <input onkeyup="select_term()" id="util_dep" name="util_dep" type="text" class="form-control"></td>
                                 </tr>
                                 <tr>
                                     <td>Advance Rent</td>
-                                    <td> <input id="adv_rent" name="adv_rent" type="number" class="form-control"></td>
+                                    <td> <input onkeyup="select_term()"  id="adv_rent" name="adv_rent" type="text" class="form-control"></td>
                                 </tr>
                             </table>
                             <hr>
@@ -133,7 +133,9 @@
         var check_in_date = document.getElementById('check_in_date').value;
         var check_out_date = document.getElementById('check_out_date').value;
         var building = document.getElementById('building').value;
-    
+        
+        var booking = document.getElementById('adv_rent').value;
+
         var d1 = new Date(check_in_date);
         var d2 = new Date(check_out_date);
         var timeDiff = d2.getTime() - d1.getTime();
@@ -152,23 +154,27 @@
         }
 
         if(building === 'HARVARD'){
-            document.getElementById('total_amt').innerHTML = '6800';
+            document.getElementById('adv_rent').value = '6800';
         }
 
         if(building === 'PRINCETON'){
-            document.getElementById('total_amt').innerHTML = '7500';
+            document.getElementById('adv_rent').value = '7500';
         }
 
         if(building === 'WHARTON'){
-            document.getElementById('total_amt').innerHTML = '11000';
+            document.getElementById('adv_rent').value = '11000';
         }
+
+        document.getElementById('total_amt').innerHTML =  document.getElementById('sec_dep').value +  document.getElementById('util_dep').value +  document.getElementById('adv_rent').value;
     }
 
      function select_term(){  
         var check_in_date = document.getElementById('check_in_date').value;
         var check_out_date = document.getElementById('check_out_date').value;
         var building = document.getElementById('building').value;
-    
+        
+        var booking = document.getElementById('adv_rent').value;
+
         var d1 = new Date(check_in_date);
         var d2 = new Date(check_out_date);
         var timeDiff = d2.getTime() - d1.getTime();
@@ -186,17 +192,7 @@
             document.getElementById('booking_term').value = 'transient' ;
         }
 
-        if(building === 'HARVARD'){
-            document.getElementById('total_amt').innerHTML = '6800';
-        }
-
-        if(building === 'PRINCETON'){
-            document.getElementById('total_amt').innerHTML = '7500';
-        }
-
-        if(building === 'WHARTON'){
-            document.getElementById('total_amt').innerHTML = '11000';
-        }
+        document.getElementById('total_amt').innerHTML =  (parseFloat(document.getElementById('sec_dep').value) +  parseFloat(document.getElementById('util_dep').value) +  parseFloat(document.getElementById('adv_rent').value)).toFixed(2);
 
      }
         

@@ -78,8 +78,14 @@ class RoomController extends Controller
                             ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
                             ->where('room_id_foreign', $room_id)
                             ->get();
+            
+            $owner = DB::table('users')
+                            ->join('rooms', 'users.user_id', 'rooms.own_id_foreign')
+                            ->where('room_id', $room_id)
+                            ->distinct()
+                            ->get(['name']);
 
-            return view('rooms.show-bookings',compact('room', 'bookings'));
+            return view('rooms.show-bookings',compact('room', 'bookings', 'owner'));
         }
         else{
             $room = Room::findOrFail($room_id);

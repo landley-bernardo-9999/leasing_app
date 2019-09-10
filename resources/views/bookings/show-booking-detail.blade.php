@@ -5,10 +5,8 @@
     @foreach ($booking as $booking)
         <div class="row">
             <div class="col-md-4">
+                <h4>Resident Information</h4>
                <table class="table-borderless">
-                   <tr>
-                       <th><h4>Resident Information</h4></th>
-                   </tr>
                    <tr>
                        <th>Full Name</th>
                    </tr>
@@ -44,10 +42,8 @@
                </table>
             </div>
             <div class="col-md-4">
+                <h4>Booking Information</h4>
                <table class="table-borderless">
-                   <tr>
-                       <th><h4>Booking Information</h4></th>
-                   </tr>
                    <tr>
                        <th>Status</th>
                    </tr>
@@ -85,10 +81,8 @@
                </table>
             </div>
              <div class="col-md-4">
+                <h4>Utilities Reading</h4>
                <table class="table-borderless">
-                   <tr>
-                       <th><h4>Utilities Reading</h4></th>
-                   </tr>
                    <tr>
                        <th>Move in</th>
                    </tr>
@@ -122,12 +116,38 @@
         <hr>
         <div class="row">
              <div class="col-md-12">
-               <table class="table-borderless">
-                   <tr>
-                       <th><h4>Billing Information</h4></th>
-                   </tr>
-                   
-               </table>
+                <h4>Billing Information</h4>
+               <table class="table table-striped table-borderless">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Description</th>
+                    <th>Amount</td>
+                    <th>Status</th>
+                    <th>Balance</th>
+                </tr>
+                </thead>
+                <?php $row_no = 1; ?>
+                <tbody>
+                @foreach ($billings as $billing)
+               
+                <tr>
+                    <th>{{ $row_no++ }}</th>
+                    <td>{{ $billing->desc }}</td>
+                    <td>{{ $billing->amt }}</td>
+                    <td>{{ $billing->pay_status }}</td>
+                    <td>
+                        @if($billing->amt-$billing->amt_paid == 0)
+                            <p>{{ $billing->amt-$billing->amt_paid }}</p>
+                        @else
+                            <p class="text-danger">{{ $billing->amt-$billing->amt_paid }}</p>
+                        @endif
+                    </td>
+                </tr>
+                
+                @endforeach
+                </tbody>
+            </table>
             </div>
         </div>
     @endforeach
