@@ -117,14 +117,14 @@
         <div class="row">
              <div class="col-md-12">
                 <h4>Billing Information</h4>
+                <p>Running Balance  </p>
                <table class="table table-striped table-borderless">
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>Billing Date</th>
                     <th>Description</th>
                     <th>Amount</td>
-                    <th>Status</th>
-                    <th>Balance</th>
                 </tr>
                 </thead>
                 <?php $row_no = 1; ?>
@@ -133,19 +133,17 @@
                
                 <tr>
                     <th>{{ $row_no++ }}</th>
+                    <td>{{ $billing->created_at }}</td>
                     <td>{{ $billing->desc }}</td>
-                    <td>{{ $billing->amt }}</td>
-                    <td>{{ $billing->pay_status }}</td>
-                    <td>
-                        @if($billing->amt-$billing->amt_paid == 0)
-                            <p>{{ $billing->amt-$billing->amt_paid }}</p>
-                        @else
-                            <p class="text-danger">{{ $billing->amt-$billing->amt_paid }}</p>
-                        @endif
-                    </td>
+                    <td>{{ number_format($billing->bil_amt,2) }}</td> 
                 </tr>
-                
                 @endforeach
+                <tr>
+                    <th>TOTAL</th>
+                    <td></td>
+                    <td></td>
+                    <th>{{ number_format($billings->sum('bil_amt'), 2) }}</th>
+                </tr>
                 </tbody>
             </table>
             </div>

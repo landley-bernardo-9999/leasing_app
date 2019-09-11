@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Room;
 use App\Resident;
 use DB;
-use App\Payment;
+use App\Billing;
 
 class BookingController extends Controller
 {
@@ -67,17 +67,23 @@ class BookingController extends Controller
                     'room_status' => 'OCCUPIED'                    
                 ]);
         
-        $payment = new Payment();
-        $payment->amt = $request->sec_dep + $request->util_dep;
-        $payment->desc = 'move_in_charges';
-        $payment->booking_id_foreign = $booking->booking_id;
-        $payment->save();
+        $billing = new Billing();
+        $billing->bil_amt = $request->sec_dep;
+        $billing->desc = 'SECURITY DEPOSIT';
+        $billing->booking_id_foreign = $booking->booking_id;
+        $billing->save();
 
-        $payment = new Payment();
-        $payment->amt =  $request->adv_rent;
-        $payment->desc = 'advance_rent';
-        $payment->booking_id_foreign = $booking->booking_id;
-        $payment->save();
+        $billing = new Billing();
+        $billing->bil_amt = $request->util_dep;
+        $billing->desc = 'UTILITIES DEPOSIT';
+        $billing->booking_id_foreign = $booking->booking_id;
+        $billing->save();
+
+        $billing = new Billing();
+        $billing->bil_amt = $request->adv_rent;
+        $billing->desc = 'ADVANCE RENT';
+        $billing->booking_id_foreign = $booking->booking_id;
+        $billing->save();
 
         session()->forget('check_in_date');
         session()->forget('check_out_date');
@@ -112,7 +118,7 @@ class BookingController extends Controller
                         ->where('booking_id', $booking_id)
                         ->get();
                         
-        $billings = DB::table('payments')->where('booking_id_foreign', $booking_id)->get();
+        $billings = DB::table('billings')->where('booking_id_foreign', $booking_id)->get();
 
         return view('bookings.show-booking-detail', compact('booking', 'billings'));
     }

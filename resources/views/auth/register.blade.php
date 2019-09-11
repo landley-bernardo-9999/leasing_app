@@ -75,6 +75,7 @@
                                  <select id="role" type="text" class="form-control @error('role') is-invalid @enderror" name="role" required autocomplete="role"> 
                                    <option value="admin" value="{{ old('role') }}">admin</option>
                                    <option value="owner" value="{{ old('role') }}">owner</option>
+                                   <option value="treasury" value="{{ old('role') }}">treasury</option>
                                </select>
 
                                 @error('role')
