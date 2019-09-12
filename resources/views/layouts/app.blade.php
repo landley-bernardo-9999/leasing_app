@@ -73,8 +73,8 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
+            @include('notifications')
             @yield('content')
         </main>
     </div>

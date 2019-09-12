@@ -25,14 +25,14 @@
                                    @else
                                         <option value="">Select Resident...</option>
                                         @foreach ($residents as $resident)
-                                            <option value="{{ $resident->booking_id }}">{{ $resident->res_full_name.' - '.$resident->room_no.' '.$resident->room_wing }} </option>
+                                            <option value="{{ $resident->booking_id.' '.$resident->res_id }}">{{ $resident->res_full_name.' - '.$resident->room_no.' '.$resident->room_wing }} </option>
                                         @endforeach
                                    @endif
                                 </select>
                     
                                 @if($residents->count() === 1)
                                     <small id="" class="form-text text-muted"><a class="text-danger" href="/payments/create">Select another resident...</a></small>
-                                @endif
+                                
                                 
                                 <br>          
                                 
@@ -42,12 +42,15 @@
                                     <option value="THRU CASH">Thru Cash</option>
                                     <option value="THRU BANK">Thru Bank</option>
                                     <option value="THRU CHEQUE">Thru Cheque</option>
+                                    <option value="WAIVED">Waived</option>
+                                    <option value="REVERT BACK">Revert Back</option>
                                 </select>
+                                @endif
 
                                 <br>
                                 <div id="amt_paid_div">
                                     <label for="amt_paid">Amount Paid</label>
-                                    <input onkeyup="show_button()" type="text" class="form-control" id="amt_paid" name="amt_paid" value="" form="form2">
+                                    <input onkeyup="show_button()" type="text" class="form-control" id="amt_paid" name="amt_paid" value="" form="form2" required>
                                     <br>
                                 </div>
                                 
@@ -89,42 +92,99 @@
                                     <div class="card-body">
                                         <div class="card-title">
                                             <b>Billing Information</b>
+                                            <small id="" class="form-text ">Running Balance: {{ number_format( $billings->sum('bil_amt') - $payments->sum('amt_paid'), 2) }}</small>
                                             <hr>
                                             @if($residents->count() === 1)
                                             <table class="table table-borderless">
+                                                <?php $row_no = 1; ?>
                                                 @foreach ($billings as $billing)
                                                 <tr>
+                                                    
+                                                    <td><b>{{ $row_no++ }}.</b>&nbsp&nbsp&nbsp&nbsp{{ \Carbon\Carbon::parse($billing->created_at)->format('d/m/Y') }}</td>
                                                     <td>{{ $billing->desc }}</th>
                                                     <td>{{ number_format($billing->bil_amt,2) }}</td>
                                                 </tr>
                                                 @endforeach
                                                 <tr>
-                                                    <th>TOTAL</th>
-                                                    <th>{{ number_format($billings->sum('bil_amt'),2) }}</th>
-                                                </tr>
-                                                <tr>
-                                                    <th>RUNNING BALANCE</th>
-                                                    <th>123</th>
-                                                </tr>
-                                                <tr>
                                                     <td><button id="button" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn btn-primary" type="submit" form="form2"><i class="fas fa-arrow-right"></i> Submit</button></td>
                                                 </tr>
-                                                @else
-                                                <p>Nothing to show.</p>
+                                              
                                             </table>
+                                            @else
+                                            <p>Nothing to show.</p>
                                         </div>
                                     </div>
                                 </div>
                                 @endif
                             </div>
                         </div>
+
                        
                 </div>
             </div>
        </div>
     </div>
+   
 </div>
 
+@if($residents->count() === 1)
+<div class="container">
+    <div class="row">
+       <div class="col-md-12">
+            <div class="card" >
+                <div class="card-header"><h5><i class="fas fa-info"></i>&nbspPayment History</h5></div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Billing Date</th>
+                            <th>Date Paid</th>
+                            <th>Form of Payment</th>
+                            <th>Date Deposited</th>
+                            <th>Bank Name</th>
+                            <th>Cheque No</th>
+                            <th>Amount Paid</th>
+                            
+                            <th>OR Number</th>
+                            <th>AR Number</th>
+                            
+                         
+                        </tr>
+                        </thead>
+                        <?php $row_no = 1; ?>
+                        <tbody>
+                        @foreach ($payments as $payment)
+                       
+                        <tr>
+                            <th>{{ $row_no++ }}</th>
+                            <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('d/m/Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($payment->updated_at)->format('d/m/Y') }}</td>
+                            <td>{{ $payment->form_of_pay }}</td>
+                            <td>{{ \Carbon\Carbon::parse($payment->date_dep)->format('d/m/Y') }}</td>
+                            <td>{{ $payment->bank_name }}</td>
+                            <td>{{ $payment->check_no }}</td>
+                            <td>{{ number_format($payment->amt_paid,2) }}</td>
+                            
+
+                            <td>{{ $payment->or_number }}</td>
+                            <td>{{ $payment->ar_number }}</td>
+                            
+                           
+                            <td></td>
+                        </tr>
+                        
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+       
+    </div>
+   
+</div>
+</div>
+@endif
 <script>
      window.onload = function() {
         document.getElementById('amt_paid_div').style.visibility = 'hidden';
@@ -136,7 +196,7 @@
      }
 
      function getNewVal(item){
-         if(item.value=== 'THRU CASH'){
+         if(item.value=== 'THRU CASH' || item.value=== 'REVERT BACK' || item.value=== 'WAIVED'){
             document.getElementById('amt_paid_div').style.visibility = 'visible';
             document.getElementById('or_no_div').style.visibility = 'visible';
             document.getElementById('bank_name_div').style.visibility = 'hidden';

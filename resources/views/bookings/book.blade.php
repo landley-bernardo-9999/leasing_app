@@ -11,7 +11,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-city"></i></span>
                 </div>
-                <select class="form-control" name="site" id="site" onchange="filter(this.value)">
+                <select class="form-control" name="site" id="site" >
                     @foreach ($site as $row)
                     <option value="{{ $row->site }}">{{ $row->site }}</option>
                     @endforeach
@@ -27,14 +27,14 @@
                 </div>
                 
                
-                <select class="form-control" name="building" id="building" onchange="filter(this.value)">
+                <select class="form-control" name="building" id="building" >
                     @foreach ($building as $row)
                     <option value="{{ $row->building }}">{{ $row->building }}</option>
                     @endforeach
                 </select>
                 
 
-               <select class="form-control" name="floor_no" id="floor_no" onchange="filter(this.value)">
+               <select class="form-control" name="floor_no" id="floor_no" >
                     @foreach ($floor_no as $row)
                     <option value="{{ $row->floor_no }}">{{ $row->floor_no }}</option>
                     @endforeach
@@ -49,7 +49,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-bed"></i></span>
                 </div>
-               <select class="form-control" name="type_of_bed" id="type_of_bed" onchange="filter(this.value)">
+               <select class="form-control" name="type_of_bed" id="type_of_bed" >
                     @foreach ($type_of_bed as $row)
                     <option value="{{ $row->type_of_bed }}">{{ $row->type_of_bed }}</option>
                     @endforeach

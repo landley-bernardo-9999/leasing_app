@@ -18,7 +18,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $building = Room::orderBy('building')->distinct()->get('building');
+        $building = Room::orderBy('site')->orderBy('building')->distinct()->get('building');
         $floor_no = Room::orderBy('floor_no')->distinct()->get('floor_no');
         $type_of_bed = Room::orderBy('type_of_bed')->distinct()->get('type_of_bed');
         $site = Room::orderBy('site')->distinct()->get('site');
@@ -67,23 +67,31 @@ class BookingController extends Controller
                     'room_status' => 'OCCUPIED'                    
                 ]);
         
-        $billing = new Billing();
-        $billing->bil_amt = $request->sec_dep;
-        $billing->desc = 'SECURITY DEPOSIT';
-        $billing->booking_id_foreign = $booking->booking_id;
-        $billing->save();
-
-        $billing = new Billing();
-        $billing->bil_amt = $request->util_dep;
-        $billing->desc = 'UTILITIES DEPOSIT';
-        $billing->booking_id_foreign = $booking->booking_id;
-        $billing->save();
-
-        $billing = new Billing();
-        $billing->bil_amt = $request->adv_rent;
-        $billing->desc = 'ADVANCE RENT';
-        $billing->booking_id_foreign = $booking->booking_id;
-        $billing->save();
+        if($request->booking_term === 'transient'){
+            $billing = new Billing();
+            $billing->bil_amt = $request->adv_rent;
+            $billing->desc = 'TRANSIENT RENT';
+            $billing->booking_id_foreign = $booking->booking_id;
+            $billing->save();
+        }else{
+            $billing = new Billing();
+            $billing->bil_amt = $request->sec_dep;
+            $billing->desc = 'SECURITY DEPOSIT';
+            $billing->booking_id_foreign = $booking->booking_id;
+            $billing->save();
+    
+            $billing = new Billing();
+            $billing->bil_amt = $request->util_dep;
+            $billing->desc = 'UTILITIES DEPOSIT';
+            $billing->booking_id_foreign = $booking->booking_id;
+            $billing->save();
+    
+            $billing = new Billing();
+            $billing->bil_amt = $request->adv_rent;
+            $billing->desc = 'ADVANCE RENT';
+            $billing->booking_id_foreign = $booking->booking_id;
+            $billing->save();
+        }
 
         session()->forget('check_in_date');
         session()->forget('check_out_date');
@@ -101,7 +109,7 @@ class BookingController extends Controller
                         ->distinct()
                         ->get(['name']);
 
-        return view('rooms.show-bookings',compact('room', 'bookings', 'owner'));
+        return view('rooms.show-bookings',compact('room', 'bookings', 'owner'))->with('success', 'Booking has been added to the database!');
     }
 
     /**
@@ -118,9 +126,16 @@ class BookingController extends Controller
                         ->where('booking_id', $booking_id)
                         ->get();
                         
-        $billings = DB::table('billings')->where('booking_id_foreign', $booking_id)->get();
+        $billings = Billing::where('booking_id_foreign', $booking_id)->get(); 
 
-        return view('bookings.show-booking-detail', compact('booking', 'billings'));
+        $payments = DB::table('residents')
+            ->leftJoin('bookings', 'res_id', 'res_id_foreign')
+            ->leftJoin('payments', 'res_id', 'resident_id_foreign')
+            ->where('booking_id', $booking_id)
+            
+            ->get();
+
+        return view('bookings.show-booking-detail', compact('booking', 'billings', 'payments'));
     }
 
     /**
@@ -129,9 +144,9 @@ class BookingController extends Controller
      * @param  \App\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function edit($booking_id)
+    public function edit($booking_id, Request $request)
     {
-        return view('bookings.edit-booking');
+        return view('bookings.moveout-form');
     }
 
     /**

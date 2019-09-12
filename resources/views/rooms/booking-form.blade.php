@@ -105,11 +105,12 @@
                                 </tr>
                                 <tr>
                                     <td>Utilities Deposit</td>
-                                    <td> <input onkeyup="select_term()" id="util_dep" name="util_dep" type="text" class="form-control"></td>
+                                    <td> <input onkeyup="select_term()" id="util_dep" name="util_dep" value="2000" type="text" class="form-control"></td>
                                 </tr>
                                 <tr>
-                                    <td>Advance Rent</td>
+                                    <td >Advance Rent<small id="" class="form-text text-muted">Transient Fee </small></td>
                                     <td> <input onkeyup="select_term()"  id="adv_rent" name="adv_rent" type="text" class="form-control"></td>
+                                    <input type="hidden" name="transient_rent" id="transient_rent" value="{{ $room->transient_rent }}">
                                 </tr>
                             </table>
                             <hr>
@@ -143,29 +144,55 @@
     
         if(DaysDiff => 180 && DaysDiff > 28){
             document.getElementById('booking_term').value =   'long_term' ;
+
+            if(building === 'HARVARD'){
+            document.getElementById('adv_rent').value = '6800';
+            document.getElementById('sec_dep').value = '6800';
+            }
+
+            if(building === 'PRINCETON'){
+                document.getElementById('adv_rent').value = '7500';
+                document.getElementById('sec_dep').value = '7500';
+            }
+
+            if(building === 'WHARTON'){
+                document.getElementById('adv_rent').value = '11000';
+                document.getElementById('sec_dep').value = '11000';
+            }
         }
     
         if(DaysDiff < 180 && DaysDiff > 28){
             document.getElementById('booking_term').value =  'short_term' ;
+            
+            if(building === 'HARVARD'){
+            document.getElementById('adv_rent').value = '6800';
+            document.getElementById('sec_dep').value = '6800';
+            }
+
+            if(building === 'PRINCETON'){
+                document.getElementById('adv_rent').value = '7500';
+                document.getElementById('sec_dep').value = '7500';
+            }
+
+            if(building === 'WHARTON'){
+                document.getElementById('adv_rent').value = '11000';
+                document.getElementById('sec_dep').value = '11000';
+            }
         }
     
         if(DaysDiff <= 28 ){
             document.getElementById('booking_term').value = 'transient' ;
+
+            document.getElementById('util_dep').value = '0';
+            document.getElementById('sec_dep').value = '0';
+
+            document.getElementById('adv_rent').value = document.getElementById('transient_rent').value * DaysDiff;
         }
 
-        if(building === 'HARVARD'){
-            document.getElementById('adv_rent').value = '6800';
-        }
+   
 
-        if(building === 'PRINCETON'){
-            document.getElementById('adv_rent').value = '7500';
-        }
+        document.getElementById('total_amt').innerHTML =  (parseFloat(document.getElementById('sec_dep').value) +  parseFloat(document.getElementById('util_dep').value) +  parseFloat(document.getElementById('adv_rent').value)).toFixed(2);
 
-        if(building === 'WHARTON'){
-            document.getElementById('adv_rent').value = '11000';
-        }
-
-        document.getElementById('total_amt').innerHTML =  document.getElementById('sec_dep').value +  document.getElementById('util_dep').value +  document.getElementById('adv_rent').value;
     }
 
      function select_term(){  
@@ -182,14 +209,55 @@
     
         if(DaysDiff => 180 && DaysDiff > 28){
             document.getElementById('booking_term').value =   'long_term' ;
+
+            if(building === 'HARVARD'){
+                document.getElementById('adv_rent').value = '6800';
+                document.getElementById('sec_dep').value = '6800';
+                document.getElementById('util_dep').value = '2000';
+            }
+
+            if(building === 'PRINCETON'){
+                document.getElementById('adv_rent').value = '7500';
+                document.getElementById('sec_dep').value = '7500';
+                document.getElementById('util_dep').value = '2000';
+            }
+
+            if(building === 'WHARTON'){
+                document.getElementById('adv_rent').value = '11000';
+                document.getElementById('sec_dep').value = '11000';
+                document.getElementById('util_dep').value = '2000';
+            }
         }
     
         if(DaysDiff < 180 && DaysDiff > 28){
             document.getElementById('booking_term').value =  'short_term' ;
+
+            if(building === 'HARVARD'){
+            document.getElementById('adv_rent').value = '6800';
+            document.getElementById('sec_dep').value = '6800';
+            document.getElementById('util_dep').value = '2000';
+            }
+
+            if(building === 'PRINCETON'){
+                document.getElementById('adv_rent').value = '7500';
+                document.getElementById('sec_dep').value = '7500';
+                document.getElementById('util_dep').value = '2000';
+            }
+
+            if(building === 'WHARTON'){
+                document.getElementById('adv_rent').value = '11000';
+                document.getElementById('sec_dep').value = '11000';
+                document.getElementById('util_dep').value = '2000';
+            }
         }
     
         if(DaysDiff <= 28 ){
             document.getElementById('booking_term').value = 'transient' ;
+
+            document.getElementById('util_dep').value = '0';
+            document.getElementById('sec_dep').value = '0';
+
+            document.getElementById('adv_rent').value = document.getElementById('transient_rent').value * DaysDiff;
         }
 
         document.getElementById('total_amt').innerHTML =  (parseFloat(document.getElementById('sec_dep').value) +  parseFloat(document.getElementById('util_dep').value) +  parseFloat(document.getElementById('adv_rent').value)).toFixed(2);

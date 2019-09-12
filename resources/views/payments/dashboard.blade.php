@@ -16,7 +16,7 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                        <a href="#"><h5 class="card-title text-center">Reports</h5></a>
+                        <a href="/payments"><h5 class="card-title text-center">Reports</h5></a>
                     <h1 class="card-text text-center"><i class="fas fa-chart-line"></i></h1>
                 </div>    
             </div>

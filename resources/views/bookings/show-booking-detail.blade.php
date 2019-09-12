@@ -1,8 +1,12 @@
 @extends('layouts.app')
 @section('title', 'View Booking')
 @section('content')
+@foreach ($booking as $booking)
 <div class="container">
-    @foreach ($booking as $booking)
+    <p class="text-right"><a href="/bookings/{{ $booking->booking_id }}/edit">Move Out</a></p>
+    
+    <hr>
+    
         <div class="row">
             <div class="col-md-4">
                 <h4>Resident Information</h4>
@@ -112,12 +116,13 @@
                  
                </table>
             </div>
-        </div>
+        </div>  
         <hr>
         <div class="row">
              <div class="col-md-12">
                 <h4>Billing Information</h4>
-                <p>Running Balance  </p>
+                <small id="" class="form-text ">Running Balance: {{ number_format( $billings->sum('bil_amt') - $payments->sum('amt_paid'), 2) }}</small>
+            
                <table class="table table-striped table-borderless">
                 <thead>
                 <tr>

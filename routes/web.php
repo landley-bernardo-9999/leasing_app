@@ -57,6 +57,8 @@ Route::group(['middleware' => 'verified'], function(){
 
     Route::get('/search/payments{s?}', 'PaymentController@create')->where('s', '[\w\d]+');
 
+    Route::get('/filter/payments{s?}', 'PaymentController@index')->where('s', '[\w\d]+');
+
 });
 
 
