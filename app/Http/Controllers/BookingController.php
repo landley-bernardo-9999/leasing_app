@@ -8,6 +8,9 @@ use App\Room;
 use App\Resident;
 use DB;
 use App\Billing;
+use App\Payment;
+use Carbon\Carbon;
+USE App\Guardian;
 
 class BookingController extends Controller
 {
@@ -44,6 +47,10 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
+ 
+        try{
+
         $resident = new Resident();
         $resident->res_type = 'primary';
         $resident->res_full_name = $request->full_name;
@@ -51,6 +58,14 @@ class BookingController extends Controller
         $resident->res_mobile = $request->mobile;
         $resident->res_country = $request->country;
         $resident->save();
+
+        $guardian = new Guardian();
+        $guardian->guardian_full_name = $request->guardian_full_name;
+        $guardian->relationship = $request->relationship;
+        $guardian->guardian_mobile = $request->guardian_mobile;
+        $guardian->guardian_email = $request->guardian_email;
+        $guardian->res_guar_foreign_id = $resident->res_id;
+        $guardian->save();
 
         $booking = new Booking();
         $booking->check_in_date = $request->check_in_date;
@@ -61,55 +76,65 @@ class BookingController extends Controller
         $booking->res_id_foreign = $resident->res_id;
         $booking->save();
 
-        Room::
-        where('room_id', $request->room_id)
-        ->update([
+        Room:: where('room_id', $request->room_id)
+            ->update([
                     'room_status' => 'OCCUPIED'                    
                 ]);
         
         if($request->booking_term === 'transient'){
             $billing = new Billing();
+            $billing->created_at = $request->check_in_date;
             $billing->bil_amt = $request->adv_rent;
             $billing->desc = 'TRANSIENT RENT';
             $billing->booking_id_foreign = $booking->booking_id;
             $billing->save();
+
+            $payment = new Payment();
+            $payment->updated_at = $request->check_in_date;
+            $payment->amt_paid = $billing->bil_amt;
+            $payment->resident_id_foreign =  $resident->res_id;
+            $payment->save();
+
         }else{
-            $billing = new Billing();
-            $billing->bil_amt = $request->sec_dep;
-            $billing->desc = 'SECURITY DEPOSIT';
-            $billing->booking_id_foreign = $booking->booking_id;
-            $billing->save();
+            $billing1 = new Billing();
+            $billing1->created_at = $request->check_in_date;
+            $billing1->bil_amt = $request->sec_dep;
+            $billing1->desc = 'SECURITY DEPOSIT';
+            $billing1->booking_id_foreign = $booking->booking_id;
+            $billing1->save();
     
-            $billing = new Billing();
-            $billing->bil_amt = $request->util_dep;
-            $billing->desc = 'UTILITIES DEPOSIT';
-            $billing->booking_id_foreign = $booking->booking_id;
-            $billing->save();
+            $billing2 = new Billing();
+            $billing2->created_at = $request->check_in_date;
+            $billing2->bil_amt = $request->util_dep;
+            $billing2->desc = 'UTILITIES DEPOSIT';
+            $billing2->booking_id_foreign = $booking->booking_id;
+            $billing2->save();
     
-            $billing = new Billing();
-            $billing->bil_amt = $request->adv_rent;
-            $billing->desc = 'ADVANCE RENT';
-            $billing->booking_id_foreign = $booking->booking_id;
-            $billing->save();
+            $billing3 = new Billing();
+            $billing3->created_at = $request->check_in_date;
+            $billing3->bil_amt = $request->adv_rent;
+            $billing3->desc = 'ADVANCE RENT';
+            $billing3->booking_id_foreign = $booking->booking_id;
+            $billing3->save();
+
+            $payment = new Payment();
+            $payment->updated_at = $request->check_in_date;
+            $payment->amt_paid = $billing1->bil_amt + $billing2->bil_amt + $billing3->bil_amt;
+            $payment->resident_id_foreign =  $resident->res_id;
+            $payment->save();
+
+            session()->forget('check_in_date');
+            session()->forget('check_out_date');
+
+            return redirect('/bookings/'.$booking->booking_id)->with('success', 'Booking has been added to the database!');
         }
 
-        session()->forget('check_in_date');
-        session()->forget('check_out_date');
+        }catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error','Something is wrong with your input!');
+        }   
 
-        $room = Room::findOrFail($request->room_id);
-
-        $bookings = DB::table('bookings')
-                        ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
-                        ->where('room_id_foreign', $request->room_id)
-                        ->get();
-            
-        $owner = DB::table('users')
-                        ->join('rooms', 'users.user_id', 'rooms.own_id_foreign')
-                        ->where('room_id', $request->room_id)
-                        ->distinct()
-                        ->get(['name']);
-
-        return view('rooms.show-bookings',compact('room', 'bookings', 'owner'))->with('success', 'Booking has been added to the database!');
+        
     }
 
     /**
@@ -125,6 +150,13 @@ class BookingController extends Controller
                         ->join('rooms','bookings.room_id_foreign', 'rooms.room_id')
                         ->where('booking_id', $booking_id)
                         ->get();
+
+        $guardians = DB::table('residents')
+                        ->leftJoin('bookings', 'res_id', 'res_id_foreign')
+                        ->leftJoin('guardians', 'res_id', 'res_guar_foreign_id')
+                        ->where('booking_id', $booking_id)
+                        ->groupBy('res_id')
+                        ->get();
                         
         $billings = Billing::where('booking_id_foreign', $booking_id)->get(); 
 
@@ -135,7 +167,7 @@ class BookingController extends Controller
             
             ->get();
 
-        return view('bookings.show-booking-detail', compact('booking', 'billings', 'payments'));
+        return view('bookings.show-booking-detail', compact('booking', 'billings', 'payments', 'guardians'));
     }
 
     /**
@@ -144,9 +176,14 @@ class BookingController extends Controller
      * @param  \App\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function edit($booking_id, Request $request)
+    public function edit(Booking $booking, Request $request)
     {
-        return view('bookings.moveout-form');
+        if($booking->approved_at != null){
+            return view('bookings.moveout-form');
+        }else{
+            return abort(404);
+        }
+        
     }
 
     /**
@@ -158,7 +195,21 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        if($request->action === 'requested'){
+            $booking = Booking::findOrFail($booking->booking_id);
+            $booking->requested_at = Carbon::today()->format('Y-m-d');
+            $booking->save();
+
+            return back()->with('success', 'Request has been sent to the manager!');
+        }
+        elseif($request->action === 'approved'){
+            $booking = Booking::findOrFail($booking->booking_id);
+            $booking->approved_at = Carbon::today()->format('Y-m-d');
+            $booking->save();
+
+            return back()->with('success', 'Request has been approved!');   
+        }
+
     }
 
     /**

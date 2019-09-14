@@ -3,7 +3,20 @@
 @section('content')
 @foreach ($booking as $booking)
 <div class="container">
-    <p class="text-right"><a href="/bookings/{{ $booking->booking_id }}/edit">Move Out</a></p>
+    <div class="input-group">
+    @if($booking->requested_at == NULL)
+        <form action="/bookings/{{ $booking->booking_id }}" method="post">
+            @method('put')
+            {{ csrf_field() }}
+            <input type="hidden" name="action" id="action" value="requested">
+            <button class="btn btn-danger" onclick="return confirm('Are you sure you want to perform this operation? ');" type="submit"><i class="fas fa-sign-out-alt"></i> Request for moveout</button>
+        </form>
+    @elseif($booking->approved_at == NULL)
+        <a title="Waiting for the manager's approval." class="btn btn-warning" href="#"><i class="fas fa-sign-out-alt"></i> Request has been sent.</a>
+    @elseif($booking->requested_at != NULL && $booking->approved_at != NULL)
+        <a class="btn btn-primary" href="/bookings/{{ $booking->booking_id }}/edit"><i class="fas fa-sign-out-alt"></i>  Move Out</a>
+    @endif
+    </div>
     
     <hr>
     
@@ -85,7 +98,40 @@
                </table>
             </div>
              <div class="col-md-4">
-                <h4>Utilities Reading</h4>
+                <h4>Guardian Information</h4>
+                <table class="table-borderless">
+                        @foreach ($guardians as $guardian)
+                            <tr>
+                                <th>Full Name</th>
+                            <tr>
+                                <td>{{ $guardian->guardian_full_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Relationship</th>
+                            <tr>
+                                <td>{{ $guardian->relationship }}</td>
+                            </tr>
+                             <tr>
+                                <th>Mobile</th>
+                            <tr>
+                                <td>{{ $guardian->guardian_mobile }}</td>
+                            </tr>
+                             <tr>
+                                <th>Email</th>
+                            <tr>
+                                <td>{{ $guardian->guardian_email }}</td>
+                            </tr>
+                        @endforeach
+        
+        
+                        </table>
+        
+            </div>
+        </div>  
+        <hr>
+        <div class="row">
+         <h4>Utilities Reading</h4>
+            <div class="col-md-12">
                <table class="table-borderless">
                    <tr>
                        <th>Move in</th>
@@ -116,7 +162,7 @@
                  
                </table>
             </div>
-        </div>  
+        </div>
         <hr>
         <div class="row">
              <div class="col-md-12">
@@ -138,7 +184,7 @@
                
                 <tr>
                     <th>{{ $row_no++ }}</th>
-                    <td>{{ $billing->created_at }}</td>
+                    <td>{{ \Carbon\Carbon::parse($billing->created_at)->format('d/m/Y') }}</td>
                     <td>{{ $billing->desc }}</td>
                     <td>{{ number_format($billing->bil_amt,2) }}</td> 
                 </tr>

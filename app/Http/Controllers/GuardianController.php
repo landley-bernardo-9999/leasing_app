@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Resident;
-use App\Room;
+use App\Guardian;
 use Illuminate\Http\Request;
-use App\Booking;    
-use App\Payment;    
 
-class ResidentController extends Controller
+class GuardianController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +14,7 @@ class ResidentController extends Controller
      */
     public function index()
     {
-    
+        //
     }
 
     /**
@@ -44,10 +41,10 @@ class ResidentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Resident  $resident
+     * @param  \App\Guardian  $guardian
      * @return \Illuminate\Http\Response
      */
-    public function show(Resident $resident)
+    public function show(Guardian $guardian)
     {
         //
     }
@@ -55,10 +52,10 @@ class ResidentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Resident  $resident
+     * @param  \App\Guardian  $guardian
      * @return \Illuminate\Http\Response
      */
-    public function edit(Resident $resident)
+    public function edit(Guardian $guardian)
     {
         //
     }
@@ -67,10 +64,10 @@ class ResidentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Resident  $resident
+     * @param  \App\Guardian  $guardian
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Resident $resident)
+    public function update(Request $request, Guardian $guardian)
     {
         //
     }
@@ -78,25 +75,11 @@ class ResidentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Resident  $resident
+     * @param  \App\Guardian  $guardian
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $res_id)
+    public function destroy(Guardian $guardian)
     {
-        
-        Resident::where('res_id', $res_id)->delete();
-        Booking::where('res_id_foreign', $res_id)->delete();
-
-        Payment::where('resident_id_foreign', $res_id)->delete();
-
-        Guardian::where('res_guar_foreign_id', $res_id)->delete();
-
-        Room::
-        where('room_id', $request->room_id)
-        ->update([
-                    'room_status' => 'VACANT'                    
-                ]);
-
-        return back()->with('success', 'Booking has been deleted!');
+        //
     }
 }

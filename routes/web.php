@@ -39,8 +39,18 @@ Route::get('/', function () {
             ->get();
 
             return view('payments.dashboard', compact('payments'));
+        }elseif(auth()->user()->role === 'manager'){
+            
+           $bookings = DB::table('bookings')
+           ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
+           ->join('rooms','bookings.room_id_foreign', 'rooms.room_id')
+           ->where('requested_at','!=', NULL)
+           ->where('approved_at','==', NULL)
+           ->get();
 
+            return view('managers.dashboard', compact('bookings'));
         }
+
     }
        
 });

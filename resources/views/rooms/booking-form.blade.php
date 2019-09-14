@@ -28,11 +28,11 @@
                             <p>Email</p>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
     
-                            @error('email')
+                            {{-- @error('email')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
-                            @enderror
+                            @enderror --}}
                             <br>
                             <p>Phone Number</p>
                             <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile">
@@ -51,9 +51,45 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                            {{-- <select name="country" id="country" class="form-control">
-                                <option value=""></option>
-                            </select> --}}
+                            
+                            <hr>
+                            <h5 class="card-title text-left">GUARDIAN INFORMATION</h5>
+                                
+                            <p>Full Name</p>
+                            <input id="guardian_full_name" type="text" class="form-control @error('guardian_full_name') is-invalid @enderror" name="guardian_full_name" value="{{ old('guardian_full_name') }}"  autocomplete="guardian_full_name">
+    
+                            @error('guardian_full_name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            <br>
+                            <p>Relationship</p>
+                            <input id="relationship" type="text" class="form-control @error('relationship') is-invalid @enderror" name="relationship" value="{{ old('relationship') }}"  autocomplete="relationship">
+    
+                            @error('relationship')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            <br>
+                            <p>Mobile</p>
+                            <input id="guardian_mobile" type="text" class="form-control @error('guardian_mobile') is-invalid @enderror" name="guardian_mobile" value="{{ old('guardian_mobile') }}"  autocomplete="guardian_mobile">
+    
+                            @error('guardian_mobile')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                            <br>
+                            <p>Email</p>
+                            <input id="guardian_email" type="text" class="form-control @error('guardian_email') is-invalid @enderror" name="guardian_email" value="{{ old('guardian_email') }}"  autocomplete="guardian_email">
+    
+                            @error('guardian_email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>        
                     </div>    
                 
