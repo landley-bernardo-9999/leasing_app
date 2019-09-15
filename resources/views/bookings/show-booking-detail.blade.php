@@ -100,7 +100,7 @@
              <div class="col-md-4">
                 <h4>Guardian Information</h4>
                 <table class="table-borderless">
-                        @foreach ($guardians as $guardian)
+                        @foreach ($guardian as $guardian)
                             <tr>
                                 <th>Full Name</th>
                             <tr>

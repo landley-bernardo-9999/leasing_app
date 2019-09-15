@@ -19,9 +19,6 @@
                         <li>
                            1st General Assembly for North Cambridge Unit Owners was held March 09, 2019 on Princeton Ammenity Building.
                         </li>    
-                        <li>
-                            Schedule for remittance is every 2nd week of the month. For inquiries and other concerns regarding remittance please get in touch with the Billing Department.
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -49,6 +46,18 @@
                         </tr>
                         @endforeach
                     </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <b>My Remittances</b>
+                </div>
+                <div class="card-body">
+                   <p>Schedule for remittance is every 2nd week of the month. For inquiries and other concerns regarding remittance please get in touch with the Billing Department.</p>
+                   <a href="/remittances">See Remittances...</a>
                 </div>
             </div>
         </div>
@@ -96,6 +105,7 @@
                        </tr>
                        <tr>
                            <th>EMERGENCY CONTACT NUMBER</th>
+                           <th></th>
                        </tr>
                        <tr>
                            <td>BENGUET POLICE PROVINCIAL OFFICE</td>

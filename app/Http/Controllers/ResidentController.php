@@ -7,6 +7,8 @@ use App\Room;
 use Illuminate\Http\Request;
 use App\Booking;    
 use App\Payment;    
+use App\Guardian;
+use DB;
 
 class ResidentController extends Controller
 {
@@ -58,9 +60,16 @@ class ResidentController extends Controller
      * @param  \App\Resident  $resident
      * @return \Illuminate\Http\Response
      */
-    public function edit(Resident $resident)
+    public function edit($res_id)
     {
-        //
+        $booking = DB::table('bookings')
+                ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
+                ->join('rooms','bookings.room_id_foreign', 'rooms.room_id')
+                ->join('guardians', 'res_id', 'res_guar_foreign_id')
+                ->where('res_id', $res_id)
+                ->get();
+
+        return view('bookings.edit-booking-detail', compact('booking'));
     }
 
     /**
@@ -70,9 +79,34 @@ class ResidentController extends Controller
      * @param  \App\Resident  $resident
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Resident $resident)
+    public function update(Request $request, $res_id)
     {
-        //
+        $resident = Resident::findOrFail($res_id);
+        $resident->res_full_name = $request->res_full_name;
+        $resident->res_email = $request->res_email;
+        $resident->res_mobile = $request->res_mobile;
+        $resident->res_email = $request->res_email;
+        $resident->save();
+
+        Booking:: where('res_id_foreign', $res_id)
+        ->update([
+                'initial_water_reading' => $request->initial_water_reading,
+                'final_water_reading' => $request->final_water_reading,
+                'initial_electric_reading' => $request->initial_electric_reading,
+                'final_electric_reading' => $request->final_electric_reading                    
+            ]);
+
+
+        Guardian:: where('res_guar_foreign_id', $res_id)
+        ->update([
+                'guardian_full_name' => $request->guardian_full_name,
+                'relationship' => $request->relationship,
+                'guardian_mobile' => $request->guardian_mobile,
+                'guardian_email' => $request->guardian_email                    
+            ]);
+
+
+        return back()->with('success','Data has been edited!');
     }
 
     /**

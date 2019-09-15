@@ -3,18 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+
 use Uuid;
 
-class Payment extends Model
+class Remittance extends Model
 {
-    protected $primaryKey = 'pay_id';
+    protected $primaryKey = 'rem_id';
 
     protected $keyType = 'string';
 
     public $incrementing = false;
 
     protected $fillable = [
-         'amt_paid','form_of_pay', 'or_number', 'ar_number', 'bank_name', 'check_no', 'date_dep', 'res_id_foreign', 'desc'
+         'rem_amt', 'date_dep', 'rem_own_id_foreign', 'rem_pay_id_foreign'
     ];
 
     /**
@@ -24,7 +25,7 @@ class Payment extends Model
     {
         parent::boot();
         self::creating(function ($model) {
-            $model->pay_id = (string) Uuid::generate(4);
+            $model->rem_id = (string) Uuid::generate(4);
         });
     }
 
@@ -35,7 +36,6 @@ class Payment extends Model
      */
     public function getRouteKeyName()
     {
-        return 'pay_id';
+        return 'rem_id';
     }
-
 }

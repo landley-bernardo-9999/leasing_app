@@ -17,15 +17,16 @@ class PaymentController extends Controller
      */
     public function index(Request $request)
     {
-        $pay_date = $request->pay_date;
+            $pay_date = $request->pay_date;
 
-        if($pay_date == NULL){
-            $pay_date = Carbon::today()->format('Y-m-d');
-        }
-
-       $payments = Payment::where('updated_at', $pay_date)->get();
-
-        return view('payments.reports', compact('payments'));
+            if($pay_date == NULL){
+                $pay_date = Carbon::today()->format('Y-m-d');
+            }
+    
+           $payments = Payment::where('updated_at', $pay_date)->get();
+    
+            return view('payments.reports', compact('payments'));
+       
     }
 
     /**
@@ -46,7 +47,7 @@ class PaymentController extends Controller
 
             $billings = Billing::where('booking_id_foreign',$request->request_billings)->get();
 
-            $payments = Payment::where('resident_id_foreign', ' ')->get();
+            $payments = Payment::where('resident_id_foreign', ' ')->where('desc', NULL)->get();
 
             
         return view('payments.accept-payment', compact('residents', 'billings', 'payments'));

@@ -31,7 +31,7 @@
                         <td>
                             <div class="input-group">
                                 <a href="/bookings/{{ $booking->booking_id }}" class="btn btn-primary"><i class="far fa-eye"></i> View</a> <span style="visibility: hidden">|</span> 
-                                <a href="/bookings/{{ $booking->booking_id }}/edit" class="btn btn-warning"><i class="far fa-edit"></i> Edit</a> <span style="visibility: hidden">|</span> 
+                                <a href="/residents/{{ $booking->res_id }}/edit" class="btn btn-warning"><i class="far fa-edit"></i> Edit</a> <span style="visibility: hidden">|</span> 
                                 <form method="POST" action="/residents/{{ $booking->res_id_foreign }}">
                                     @method('delete')
                                     {{ csrf_field() }}
@@ -68,7 +68,13 @@
                     <td>{{ \Carbon\Carbon::parse($booking->check_in_date)->format('d/m/Y').' - '.\Carbon\Carbon::parse($booking->check_out_date)->format('d/m/Y')}} </td>
                     <td>{{ $booking->booking_status }}</td>
                     <td>{{ $booking->booking_term }}</td>
-                    <td>{{ $booking->reason_for_moving_out }}</td>
+                    <td>
+                      @if($booking->reason_for_moving_out == NULL)
+                        NA
+                      @else
+                        {{ $booking->reason_for_moving_out }}
+                      @endif
+                    </td>
                     </td>
                 </tr>
                 

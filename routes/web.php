@@ -29,7 +29,7 @@ Route::get('/', function () {
                 ->join('users', 'rooms.own_id_foreign', 'users.user_id')
                 ->where('own_id_foreign', auth()->user()->user_id)
                 ->get();
-
+            
             return view('owners.dashboard', compact('rooms'));
         }elseif(auth()->user()->role === 'treasury'){
 
@@ -63,6 +63,7 @@ Route::group(['middleware' => 'verified'], function(){
         'bookings' => 'BookingController',
         'payments' => 'PaymentController',
         'billings' => 'BillingController',
+        'remittances' => 'RemittanceController',
     ]);
 
     Route::get('/search/payments{s?}', 'PaymentController@create')->where('s', '[\w\d]+');

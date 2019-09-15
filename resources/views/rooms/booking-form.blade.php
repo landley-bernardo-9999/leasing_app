@@ -15,8 +15,12 @@
                         <h5 class="card-title text-left">PERSONAL INFORMATION</h5>
                         
                             <div class="col-md-12">
-                            <input type="hidden" name="room_id" id="room_id" value="{{ $room->room_id }}" class="form-control">
-                            <input type="hidden" name="building" id="building" value="{{ $room->building }}" class="form-control">
+                            <input type="hidden" name="room_size" id="room_size" value="{{ $room->room_size }}">
+                            <input type="hidden" name="long_term_rent" id="long_term_rent" value="{{ $room->long_term_rent }}">
+                            <input type="hidden" name="short_term_rent" id="short_term_rent" value="{{ $room->short_term_rent }}">
+                            <input type="hidden" name="own_id" id="own_id" value="{{ $room->own_id_foreign }}">
+                            <input type="hidden" name="room_id" id="room_id" value="{{ $room->room_id }}">
+                            <input type="hidden" name="building" id="building" value="{{ $room->building }}">
                             <p>Full Name</p>
                             <input id="full_name" type="text" class="form-control @error('full_name') is-invalid @enderror" name="full_name" value="{{ old('full_name') }}" required autocomplete="full_name">
                                 @error('full_name')
@@ -146,7 +150,6 @@
                                 <tr>
                                     <td >Advance Rent<small id="" class="form-text text-muted">Transient Fee </small></td>
                                     <td> <input onkeyup="select_term()"  id="adv_rent" name="adv_rent" type="text" class="form-control"></td>
-                                    <input type="hidden" name="transient_rent" id="transient_rent" value="{{ $room->transient_rent }}">
                                 </tr>
                             </table>
                             <hr>
@@ -179,7 +182,7 @@
         var DaysDiff = timeDiff / (1000 * 3600 * 24);
     
         if(DaysDiff => 180 && DaysDiff > 28){
-            document.getElementById('booking_term').value =   'long_term' ;
+            document.getElementById('booking_term').value =   'LONG TERM' ;
 
             if(building === 'HARVARD'){
             document.getElementById('adv_rent').value = '6800';
@@ -198,7 +201,7 @@
         }
     
         if(DaysDiff < 180 && DaysDiff > 28){
-            document.getElementById('booking_term').value =  'short_term' ;
+            document.getElementById('booking_term').value =  'SHORT TERM' ;
             
             if(building === 'HARVARD'){
             document.getElementById('adv_rent').value = '6800';
@@ -217,7 +220,7 @@
         }
     
         if(DaysDiff <= 28 ){
-            document.getElementById('booking_term').value = 'transient' ;
+            document.getElementById('booking_term').value = 'TRANSIENT' ;
 
             document.getElementById('util_dep').value = '0';
             document.getElementById('sec_dep').value = '0';
@@ -244,7 +247,7 @@
         var DaysDiff = timeDiff / (1000 * 3600 * 24);
     
         if(DaysDiff => 180 && DaysDiff > 28){
-            document.getElementById('booking_term').value =   'long_term' ;
+            document.getElementById('booking_term').value =   'LONG TERM' ;
 
             if(building === 'HARVARD'){
                 document.getElementById('adv_rent').value = '6800';
@@ -266,7 +269,7 @@
         }
     
         if(DaysDiff < 180 && DaysDiff > 28){
-            document.getElementById('booking_term').value =  'short_term' ;
+            document.getElementById('booking_term').value =  'SHORT TERM' ;
 
             if(building === 'HARVARD'){
             document.getElementById('adv_rent').value = '6800';
@@ -288,7 +291,7 @@
         }
     
         if(DaysDiff <= 28 ){
-            document.getElementById('booking_term').value = 'transient' ;
+            document.getElementById('booking_term').value = 'TRANSIENT' ;
 
             document.getElementById('util_dep').value = '0';
             document.getElementById('sec_dep').value = '0';
