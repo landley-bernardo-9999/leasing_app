@@ -161,7 +161,13 @@
                             <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('d/m/Y') }}</td>
                             <td>{{ \Carbon\Carbon::parse($payment->date_dep)->format('d/m/Y') }}</td>
                             <td>{{ $payment->form_of_pay }}</td>
-                            <td>{{ \Carbon\Carbon::parse($payment->date_dep)->format('d/m/Y') }}</td>
+                            <td>
+                                @if($payment->form_of_pay == 'THRU BANK')
+                                {{ \Carbon\Carbon::parse($remittance->date_dep)->format('d/m/Y') }}
+                                @else
+                                    NA
+                                @endif
+                            </td>
                             <td>{{ $payment->bank_name }}</td>
                             <td>{{ $payment->check_no }}</td>
                             <td>{{ number_format($payment->amt_paid,2) }}</td>

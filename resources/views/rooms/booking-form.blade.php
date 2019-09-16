@@ -48,7 +48,7 @@
                             @enderror
                             <br>
                             <p>Country</p>
-                            <input id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="country" value="{{ old('country') }}" required autocomplete="country">
+                            <input id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="country" value="PH" required autocomplete="country">
     
                             @error('country')
                                 <span class="invalid-feedback" role="alert">

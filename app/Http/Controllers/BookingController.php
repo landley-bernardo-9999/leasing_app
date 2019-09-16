@@ -143,6 +143,7 @@ class BookingController extends Controller
 
                         $remittance = new Remittance();
                         $remittance->rem_amt = $request->long_term_rent - ($payment1->amt_paid + $payment2->amt_paid);
+                        $remittance->created_at = $booking->check_in_date; 
                         $remittance->rem_own_id_foreign = $request->own_id;
                         $remittance->rem_pay_id_foreign = $billing3->bil_id;
                         $remittance->save();

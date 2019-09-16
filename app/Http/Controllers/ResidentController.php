@@ -22,6 +22,7 @@ class ResidentController extends Controller
        $residents =  DB::table('bookings')
                         ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
                         ->join('rooms','bookings.room_id_foreign', 'rooms.room_id')
+                        ->orderBy('check_in_date', 'desc')
                         ->get();
                         
 

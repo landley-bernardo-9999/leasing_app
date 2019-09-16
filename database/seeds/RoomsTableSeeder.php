@@ -14,13 +14,14 @@ class RoomsTableSeeder extends Seeder
 
         DB::table('rooms')->insert([
             'room_id' =>  (string) Uuid::generate(4),
-            'room_no' => '209',
-            'site' => 'THE COURTYARDS',
-            'room_size' => 20,
-            'short_term_rent' => 14000,
-            'long_term_rent' => 13000,
-            'transient_rent' => 2500,
-            'building' => 'LOFT'
+            'room_no' => '6LO',
+            'room_wing' => 'EAST',
+            'site' => 'NORTH CAMBRIDGE',
+            'room_size' => 15,
+            'short_term_rent' => 12000,
+            'long_term_rent' => 11000,
+            'transient_rent' => 1500,
+            'building' => 'HARVARD'
         ]);
 
         // for($i = 1; $i<=75; $i++ ) {

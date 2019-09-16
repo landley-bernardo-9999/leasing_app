@@ -54,7 +54,7 @@
                     <th>Name</th>
                     <th>Check In- Check out</td>
                     <th>Status</th>
-                    <th>Contract</th>
+                    <th>Contract  </th>
                     <th>Move Out Reason</th>
                 </tr>
                 </thead>
