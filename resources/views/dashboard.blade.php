@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <h5 class="card-title text-center">Bookings</h5>
                     <h1 class="card-text text-center">{{ $bookings->count() }}</h1>
-                    <a href="#" class="text-center">Open</a>
+                    <a href="/residents" class="text-center">Open</a>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                 <div class="card-body">
                     <h5 class="card-title text-center">Owners</h5>
                     <h1 class="card-text text-center">{{ $owners->count() }}</h1>
-                    <a href="#" class="text-center">Open</a>
+                    <a href="/owners" class="text-center">Open</a>
                 </div>
             </div>
         </div>

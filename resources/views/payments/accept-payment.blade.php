@@ -159,7 +159,7 @@
                         <tr>
                             <th>{{ $row_no++ }}</th>
                             <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('d/m/Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($payment->updated_at)->format('d/m/Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($payment->date_dep)->format('d/m/Y') }}</td>
                             <td>{{ $payment->form_of_pay }}</td>
                             <td>{{ \Carbon\Carbon::parse($payment->date_dep)->format('d/m/Y') }}</td>
                             <td>{{ $payment->bank_name }}</td>

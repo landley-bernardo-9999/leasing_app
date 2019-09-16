@@ -57,7 +57,6 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'verified'], function(){
     Route::resources([
-        'owners' => 'OwnerController',
         'rooms' => 'RoomController',
         'residents' => 'ResidentController',
         'bookings' => 'BookingController',
@@ -69,6 +68,15 @@ Route::group(['middleware' => 'verified'], function(){
     Route::get('/search/payments{s?}', 'PaymentController@create')->where('s', '[\w\d]+');
 
     Route::get('/filter/payments{s?}', 'PaymentController@index')->where('s', '[\w\d]+');
+
+    Route::get('/owners', function(){
+      $owners = DB::table('users')
+                ->join('rooms', 'user_id', 'own_id_foreign') 
+                ->where('role','owner')
+                ->get();
+
+        return view('admin.show-owners', compact('owners'));
+    });
 
 });
 

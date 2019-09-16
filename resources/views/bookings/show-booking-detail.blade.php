@@ -189,12 +189,12 @@
                     <td>{{ number_format($billing->bil_amt,2) }}</td> 
                 </tr>
                 @endforeach
-                <tr>
+                {{-- <tr>
                     <th>TOTAL</th>
                     <td></td>
                     <td></td>
                     <th>{{ number_format($billings->sum('bil_amt'), 2) }}</th>
-                </tr>
+                </tr> --}}
                 </tbody>
             </table>
             </div>

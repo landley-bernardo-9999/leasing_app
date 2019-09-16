@@ -127,133 +127,136 @@ class BookingController extends Controller
                 
                 if($request->building == 'HARVARD'){
                     if($request->booking_term == 'LONG TERM'){
+                        $payment1 = new Payment();
+                        $payment1->updated_at = $booking->check_in_date;
+                        $payment1->amt_paid = $request->room_size * 58.61;
+                        $payment1->resident_id_foreign =  $resident->res_id;
+                        $payment1->desc = 'CONDO DUES'; 
+                        $payment1->save();
+
+                        $payment2 = new Payment();
+                        $payment2->updated_at = $booking->check_in_date;
+                        $payment2->amt_paid = 780;
+                        $payment2->resident_id_foreign =  $resident->res_id;
+                        $payment2->desc = 'MANAGEMENT FEE';
+                        $payment2->save();
+
                         $remittance = new Remittance();
-                        $remittance->rem_amt = 780;
+                        $remittance->rem_amt = $request->long_term_rent - ($payment1->amt_paid + $payment2->amt_paid);
                         $remittance->rem_own_id_foreign = $request->own_id;
                         $remittance->rem_pay_id_foreign = $billing3->bil_id;
                         $remittance->save();
-    
-                        $payment = new Payment();
-                        $payment->updated_at = $request->check_in_date;
-                        $payment->amt_paid = $remittance->rem_amt;
-                        $payment->resident_id_foreign =  $resident->res_id;
-                        $payment->desc = 'CONDO DUES';
-                        $payment->save();
-    
-                        $payment = new Payment();
-                        $payment->updated_at = $request->check_in_date;
-                        $payment->amt_paid = $request->room_size * 58.61 ;
-                        $payment->resident_id_foreign =  $resident->res_id;
-                        $payment->desc = 'MANAGEMENT FEE';
-                        $payment->save();
-                    }else{
-                        $remittance = new Remittance();
-                        $remittance->rem_amt = $request->long_term_rent * .2;
-                        $remittance->rem_own_id_foreign = $request->own_id;
-                        $remittance->rem_pay_id_foreign = $billing3->bil_id;
-                        $remittance->save();
-    
-                        $payment = new Payment();
-                        $payment->updated_at = $request->check_in_date;
-                        $payment->amt_paid = $remittance->rem_amt;
-                        $payment->resident_id_foreign =  $resident->res_id;
-                        $payment->desc = 'CONDO DUES';
-                        $payment->save();
-    
-                        $payment = new Payment();
-                        $payment->updated_at = $request->check_in_date;
-                        $payment->amt_paid = $request->room_size * 58.61 ;
-                        $payment->resident_id_foreign =  $resident->res_id;
-                        $payment->desc = 'MANAGEMENT FEE';
-                        $payment->save();
                     }
-                }elseif($request->building == 'PRINCETON'){
+                    else{
+                        $payment1 = new Payment();
+                        $payment1->updated_at = $booking->check_in_date;
+                        $payment1->amt_paid = $request->room_size * 58.61;
+                        $payment1->resident_id_foreign =  $resident->res_id;
+                        $payment1->desc = 'CONDO DUES';
+                        $payment1->save();
+
+                        $payment2 = new Payment();
+                        $payment2->updated_at = $booking->check_in_date;
+                        $payment2->amt_paid = $request->long_term_rent * .2;
+                        $payment2->resident_id_foreign =  $resident->res_id;
+                        $payment2->desc = 'MANAGEMENT FEE';
+                        $payment2->save();
+
+                        $remittance = new Remittance();
+                        $remittance->rem_amt = $request->long_term_rent - ($payment1->amt_paid + $payment2->amt_paid);
+                        $remittance->rem_own_id_foreign = $request->own_id;
+                        $remittance->rem_pay_id_foreign = $billing3->bil_id;
+                        $remittance->save();
+
+                }
+            }
+            elseif($request->building == 'PRINCETON'){
                     if($request->booking_term == 'LONG TERM'){
+                        $payment1 = new Payment();
+                        $payment1->updated_at = $booking->check_in_date;
+                        $payment1->amt_paid = $request->room_size * 58.61;
+                        $payment1->resident_id_foreign =  $resident->res_id;
+                        $payment1->desc = 'CONDO DUES';
+                        $payment1->save();
+
+                        $payment2 = new Payment();
+                        $payment2->updated_at = $booking->check_in_date;
+                        $payment2->amt_paid = 1200;
+                        $payment2->resident_id_foreign =  $resident->res_id;
+                        $payment2->desc = 'MANAGEMENT FEE';
+                        $payment2->save();
+
                         $remittance = new Remittance();
-                        $remittance->rem_amt = 1200;
+                        $remittance->rem_amt = $request->long_term_rent - ($payment1->amt_paid + $payment2->amt_paid);
                         $remittance->rem_own_id_foreign = $request->own_id;
                         $remittance->rem_pay_id_foreign = $billing3->bil_id;
                         $remittance->save();
-    
-                        $payment = new Payment();
-                        $payment->updated_at = $request->check_in_date;
-                        $payment->amt_paid = $remittance->rem_amt;
-                        $payment->resident_id_foreign =  $resident->res_id;
-                        $payment->desc = 'CONDO DUES';
-                        $payment->save();
-    
-                        $payment = new Payment();
-                        $payment->updated_at = $request->check_in_date;
-                        $payment->amt_paid = $request->room_size * 58.61 ;
-                        $payment->resident_id_foreign =  $resident->res_id;
-                        $payment->desc = 'MANAGEMENT FEE';
-                        $payment->save();
-                        
+
                     }else if($request->booking_term == 'SHORT TERM'){
+                        $payment1 = new Payment();
+                        $payment1->updated_at = $booking->check_in_date;
+                        $payment1->amt_paid = $request->room_size * 58.61;
+                        $payment1->resident_id_foreign =  $resident->res_id;
+                        $payment1->desc = 'CONDO DUES';
+                        $payment1->save();
+
+                        $payment2 = new Payment();
+                        $payment2->updated_at = $booking->check_in_date;
+                        $payment2->amt_paid = $request->long_term_rent * .2;
+                        $payment2->resident_id_foreign =  $resident->res_id;
+                        $payment2->desc = 'MANAGEMENT FEE';
+                        $payment2->save();
+
                         $remittance = new Remittance();
-                        $remittance->rem_amt = $request->long_term_rent * .2;
+                        $remittance->rem_amt = $request->long_term_rent - ($payment1->amt_paid + $payment2->amt_paid);
                         $remittance->rem_own_id_foreign = $request->own_id;
                         $remittance->rem_pay_id_foreign = $billing3->bil_id;
                         $remittance->save();
-    
-                        $payment = new Payment();
-                        $payment->updated_at = $request->check_in_date;
-                        $payment->amt_paid = $remittance->rem_amt;
-                        $payment->resident_id_foreign =  $resident->res_id;
-                        $payment->desc = 'CONDO DUES';
-                        $payment->save();
-    
-                        $payment = new Payment();
-                        $payment->updated_at = $request->check_in_date;
-                        $payment->amt_paid = $request->room_size * 58.61 ;
-                        $payment->resident_id_foreign =  $resident->res_id;
-                        $payment->desc = 'MANAGEMENT FEE';
-                        $payment->save();   
                     }
                     
-                }elseif($request->building == 'WHARTON'){
+                }
+                elseif($request->building == 'WHARTON'){
                     if($request->booking_term == 'LONG TERM'){
+                        $payment1 = new Payment();
+                        $payment1->updated_at = $booking->check_in_date;
+                        $payment1->amt_paid = $request->room_size * 58.61;
+                        $payment1->resident_id_foreign =  $resident->res_id;
+                        $payment1->desc = 'CONDO DUES';
+                        $payment1->save();
+
+                        $payment2 = new Payment();
+                        $payment2->updated_at = $booking->check_in_date;
+                        $payment2->amt_paid = $request->long_term_rent * .2;
+                        $payment2->resident_id_foreign =  $resident->res_id;
+                        $payment2->desc = 'MANAGEMENT FEE';
+                        $payment2->save();
+
                         $remittance = new Remittance();
-                        $remittance->rem_amt = $request->long_term_rent * .2;
+                        $remittance->rem_amt = $request->long_term_rent - ($payment1->amt_paid + $payment2->amt_paid);
                         $remittance->rem_own_id_foreign = $request->own_id;
                         $remittance->rem_pay_id_foreign = $billing3->bil_id;
                         $remittance->save();
-    
-                        $payment = new Payment();
-                        $payment->updated_at = $request->check_in_date;
-                        $payment->amt_paid = $remittance->rem_amt;
-                        $payment->resident_id_foreign =  $resident->res_id;
-                        $payment->desc = 'CONDO DUES';
-                        $payment->save();
-    
-                        $payment = new Payment();
-                        $payment->updated_at = $request->check_in_date;
-                        $payment->amt_paid = $request->room_size * 58.61 ;
-                        $payment->resident_id_foreign =  $resident->res_id;
-                        $payment->desc = 'MANAGEMENT FEE';
-                        $payment->save();
                         
                     }else{
+                        $payment1 = new Payment();
+                        $payment1->updated_at = $booking->check_in_date;
+                        $payment1->amt_paid = $request->room_size * 58.61;
+                        $payment1->resident_id_foreign =  $resident->res_id;
+                        $payment1->desc = 'CONDO DUES';
+                        $payment1->save();
+
+                        $payment2 = new Payment();
+                        $payment2->updated_at = $booking->check_in_date;
+                        $payment2->amt_paid = 1500;
+                        $payment2->resident_id_foreign =  $resident->res_id;
+                        $payment2->desc = 'MANAGEMENT FEE';
+                        $payment2->save();
+
                         $remittance = new Remittance();
-                        $remittance->rem_amt = 1500;
+                        $remittance->rem_amt = $request->long_term_rent - ($payment1->amt_paid + $payment2->amt_paid);
                         $remittance->rem_own_id_foreign = $request->own_id;
                         $remittance->rem_pay_id_foreign = $billing3->bil_id;
                         $remittance->save();
-    
-                        $payment = new Payment();
-                        $payment->updated_at = $request->check_in_date;
-                        $payment->amt_paid = $remittance->rem_amt;
-                        $payment->resident_id_foreign =  $resident->res_id;
-                        $payment->desc = 'CONDO DUES';
-                        $payment->save();
-                        
-    
-                        $payment = new Payment();
-                        $payment->updated_at = $request->check_in_date;
-                        $payment->amt_paid = $request->room_size * 58.61 ;
-                        $payment->resident_id_foreign =  $resident->res_id;
-                        $payment->desc = 'MANAGEMENT FEE';
-                        $payment->save();
                     }
 
                 }

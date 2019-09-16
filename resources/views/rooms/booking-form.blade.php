@@ -30,7 +30,7 @@
                                 @enderror
                             <br>
                             <p>Email</p>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email">
     
                             {{-- @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -38,8 +38,8 @@
                                 </span>
                             @enderror --}}
                             <br>
-                            <p>Phone Number</p>
-                            <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}" required autocomplete="mobile">
+                            <p>Mobile</p>
+                            <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}"  autocomplete="mobile">
     
                             @error('mobile')
                                 <span class="invalid-feedback" role="alert">
@@ -249,54 +249,54 @@
         if(DaysDiff => 180 && DaysDiff > 28){
             document.getElementById('booking_term').value =   'LONG TERM' ;
 
-            if(building === 'HARVARD'){
-                document.getElementById('adv_rent').value = '6800';
-                document.getElementById('sec_dep').value = '6800';
-                document.getElementById('util_dep').value = '2000';
-            }
+            // if(building === 'HARVARD'){
+            //     document.getElementById('adv_rent').value = '6800';
+            //     document.getElementById('sec_dep').value = '6800';
+            //     document.getElementById('util_dep').value = '2000';
+            // }
 
-            if(building === 'PRINCETON'){
-                document.getElementById('adv_rent').value = '7500';
-                document.getElementById('sec_dep').value = '7500';
-                document.getElementById('util_dep').value = '2000';
-            }
+            // if(building === 'PRINCETON'){
+            //     document.getElementById('adv_rent').value = '7500';
+            //     document.getElementById('sec_dep').value = '7500';
+            //     document.getElementById('util_dep').value = '2000';
+            // }
 
-            if(building === 'WHARTON'){
-                document.getElementById('adv_rent').value = '11000';
-                document.getElementById('sec_dep').value = '11000';
-                document.getElementById('util_dep').value = '2000';
-            }
+            // if(building === 'WHARTON'){
+            //     document.getElementById('adv_rent').value = '11000';
+            //     document.getElementById('sec_dep').value = '11000';
+            //     document.getElementById('util_dep').value = '2000';
+            // }
         }
     
         if(DaysDiff < 180 && DaysDiff > 28){
             document.getElementById('booking_term').value =  'SHORT TERM' ;
 
-            if(building === 'HARVARD'){
-            document.getElementById('adv_rent').value = '6800';
-            document.getElementById('sec_dep').value = '6800';
-            document.getElementById('util_dep').value = '2000';
-            }
+            // if(building === 'HARVARD'){
+            // document.getElementById('adv_rent').value = '6800';
+            // document.getElementById('sec_dep').value = '6800';
+            // document.getElementById('util_dep').value = '2000';
+            // }
 
-            if(building === 'PRINCETON'){
-                document.getElementById('adv_rent').value = '7500';
-                document.getElementById('sec_dep').value = '7500';
-                document.getElementById('util_dep').value = '2000';
-            }
+            // if(building === 'PRINCETON'){
+            //     document.getElementById('adv_rent').value = '7500';
+            //     document.getElementById('sec_dep').value = '7500';
+            //     document.getElementById('util_dep').value = '2000';
+            // }
 
-            if(building === 'WHARTON'){
-                document.getElementById('adv_rent').value = '11000';
-                document.getElementById('sec_dep').value = '11000';
-                document.getElementById('util_dep').value = '2000';
-            }
+            // if(building === 'WHARTON'){
+            //     document.getElementById('adv_rent').value = '11000';
+            //     document.getElementById('sec_dep').value = '11000';
+            //     document.getElementById('util_dep').value = '2000';
+            // }
         }
     
         if(DaysDiff <= 28 ){
             document.getElementById('booking_term').value = 'TRANSIENT' ;
 
-            document.getElementById('util_dep').value = '0';
-            document.getElementById('sec_dep').value = '0';
+            // document.getElementById('util_dep').value = '0';
+            // document.getElementById('sec_dep').value = '0';
 
-            document.getElementById('adv_rent').value = document.getElementById('transient_rent').value * DaysDiff;
+            // document.getElementById('adv_rent').value = document.getElementById('transient_rent').value * DaysDiff;
         }
 
         document.getElementById('total_amt').innerHTML =  (parseFloat(document.getElementById('sec_dep').value) +  parseFloat(document.getElementById('util_dep').value) +  parseFloat(document.getElementById('adv_rent').value)).toFixed(2);

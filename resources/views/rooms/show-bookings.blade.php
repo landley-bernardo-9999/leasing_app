@@ -12,9 +12,9 @@
                     <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Email</th>
+                        <th>Mobile</th>
                         <th>Status</th>
-                        <th>Duration</th>
+                        <th>Contract</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -25,7 +25,7 @@
                     <tr>
                         <th>{{ $row_no++ }}</th>
                         <td>{{ $booking->res_full_name }}</td>
-                        <td>{{ $booking->res_email }}</td>
+                        <td>{{ $booking->res_mobile }}</td>
                         <td>{{ $booking->booking_status }}</td>
                         <td>{{ $booking->booking_term }}</td>
                         <td>
@@ -54,7 +54,7 @@
                     <th>Name</th>
                     <th>Check In- Check out</td>
                     <th>Status</th>
-                    <th>Duration</th>
+                    <th>Contract</th>
                     <th>Move Out Reason</th>
                 </tr>
                 </thead>

@@ -19,7 +19,13 @@ class ResidentController extends Controller
      */
     public function index()
     {
-    
+       $residents =  DB::table('bookings')
+                        ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
+                        ->join('rooms','bookings.room_id_foreign', 'rooms.room_id')
+                        ->get();
+                        
+
+        return view('residents.show-residents', compact('residents'));
     }
 
     /**

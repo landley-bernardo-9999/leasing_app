@@ -47,7 +47,7 @@ class PaymentController extends Controller
 
             $billings = Billing::where('booking_id_foreign',$request->request_billings)->get();
 
-            $payments = Payment::where('resident_id_foreign', ' ')->where('desc', NULL)->get();
+            $payments = Payment::where('resident_id_foreign', ' ')->get();
 
             
         return view('payments.accept-payment', compact('residents', 'billings', 'payments'));
@@ -69,7 +69,7 @@ class PaymentController extends Controller
 
             $billings = Billing::where('booking_id_foreign',$booking_id)->get();
 
-            $payments = Payment::where('resident_id_foreign', $resident_id)->get();
+            $payments = Payment::where('resident_id_foreign', $resident_id)->whereNull('desc')->get();
 
             return view('payments.accept-payment', compact('residents', 'billings', 'payments'));
         }
