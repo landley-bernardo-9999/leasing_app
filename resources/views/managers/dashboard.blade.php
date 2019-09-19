@@ -24,12 +24,18 @@
             <td>{{ $booking->room_no.' '.$booking->room_wing }}</td>
             <td>{{ \Carbon\Carbon::parse($booking->check_in_date)->format('d/m/Y').' - '.\Carbon\Carbon::parse($booking->check_out_date)->format('d/m/Y')}} </td>
             <td>
+               @if($booking->approved_at != NULL)
+                    <a href="#/" class="btn btn-primary">Approved</a>
+                @else
                 <form action="/bookings/{{ $booking->booking_id }}" method="post">
                     @method('put')
                     {{ csrf_field() }}
                     <input type="hidden" name="action" id="action" value="approved">
                     <button class="btn btn-success" onclick="return confirm('Are you sure you want to perform this operation? ');" type="submit"><i class="fas fa-check"></i>&nbspApprove</button>
                 </form>
+               @endif
+
+               
             </td>
         </tr>
         

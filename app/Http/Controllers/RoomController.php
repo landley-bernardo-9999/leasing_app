@@ -17,9 +17,9 @@ class RoomController extends Controller
     public function index(Request $request)
     {
         if ($request->booking == null){
-            $harvard = Room::where('building', 'HARVARD')->get(['room_id', 'room_no', 'room_status', 'room_wing']);
-            $princeton = Room::where('building', 'PRINCETON')->get(['room_id', 'room_no', 'room_status', 'room_wing']);
-            $wharton = Room::where('building', 'WHARTON')->get(['room_id', 'room_no', 'room_status', 'room_wing']);
+            $harvard = Room::where('building', 'HARVARD')->orderBy('floor_no')->get(['room_id', 'room_no', 'room_status', 'room_wing']);
+            $princeton = Room::where('building', 'PRINCETON')->orderBy('floor_no')->get(['room_id', 'room_no', 'room_status', 'room_wing']);
+            $wharton = Room::where('building', 'WHARTON')->orderBy('floor_no')->get(['room_id', 'room_no', 'room_status', 'room_wing']);
 
             session(['booking' => 'false']);
 
@@ -32,13 +32,16 @@ class RoomController extends Controller
                      ->get();
 
             session(['booking' => 'true']);
+            session(['site' => $request->site]);
+            session(['building' => $request->building]);
+            session(['floor_no' => $request->floor_no]);
+            session(['type_of_bed' => $request->type_of_bed]);
             session(['check_in_date' => $request->check_in_date]);
             session(['check_out_date'=> $request->check_out_date]);
+        
 
             return view('rooms.search', compact('rooms'));
         }
-
-        
       
     }
 
@@ -71,13 +74,13 @@ class RoomController extends Controller
      */
     public function show($room_id)
     {
-        if(session('booking') == 'false' || auth()->user()->role === 'owner'){
+        if(session('booking') == 'false' || auth()->user()->role != 'admin'){
             $room = Room::findOrFail($room_id);
 
             $bookings = DB::table('bookings')
                             ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
                             ->where('room_id_foreign', $room_id)
-                            ->get();
+                            ->get();    
             
             $owner = DB::table('users')
                             ->join('rooms', 'users.user_id', 'rooms.own_id_foreign')

@@ -37,11 +37,11 @@
                     <table class="table table-borderless">
                         <tr>
                             <th>Room No</td>
-                            <td>Status</td>
+                            <th>Status</th>
                         </tr>
                         @foreach ($rooms as $room)
                         <tr>
-                            <td><a href="/rooms/{{ $room->room_id }}">{{ $room->room_no.' '.$room->room_wing }}</td>
+                            <td><a href="/rooms/{{ $room->room_id }}">{{ $room->building.' '.$room->room_no.' '.$room->room_wing }}</td>
                             <td>{{ $room->room_status }}</td>
                         </tr>
                         @endforeach

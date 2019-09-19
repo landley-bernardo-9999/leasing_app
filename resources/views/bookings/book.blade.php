@@ -12,6 +12,8 @@
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-city"></i></span>
                 </div>
                 <select class="form-control" name="site" id="site" >
+                    <option value="{{ session('site') }}" selected>{{ session('site') }} </option>
+                    <option value=""><small id="" class="form-text text-muted">...</small></option>
                     @foreach ($site as $row)
                     <option value="{{ $row->site }}">{{ $row->site }}</option>
                     @endforeach
@@ -28,6 +30,8 @@
                 
                
                 <select class="form-control" name="building" id="building" >
+                    <option value="{{ session('building') }}"  selected>{{ session('building') }}</option>
+                    <option value=""><small id="" class="form-text text-muted">...</small></option>
                     @foreach ($building as $row)
                     <option value="{{ $row->building }}">{{ $row->building }}</option>
                     @endforeach
@@ -35,8 +39,10 @@
                 
 
                <select class="form-control" name="floor_no" id="floor_no" >
+                    <option value="{{ session('floor_no') }}"  selected>{{ session('floor_no') }} floor</option>
+                    <option value=""><small id="" class="form-text text-muted">...</small></option>
                     @foreach ($floor_no as $row)
-                    <option value="{{ $row->floor_no }}">{{ $row->floor_no }}</option>
+                    <option value="{{ $row->floor_no }}">{{ $row->floor_no }} floor</option>
                     @endforeach
                 </select>
             </div>
@@ -50,6 +56,8 @@
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-bed"></i></span>
                 </div>
                <select class="form-control" name="type_of_bed" id="type_of_bed" >
+                    <option value="{{ session('type_of_bed') }}"  selected>{{ session('type_of_bed') }}</option>
+                    <option value=""><small id="" class="form-text text-muted">...</small></option>
                     @foreach ($type_of_bed as $row)
                     <option value="{{ $row->type_of_bed }}">{{ $row->type_of_bed }}</option>
                     @endforeach
@@ -65,8 +73,8 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
                 </div>
-               <input class="form-control" type="date" name="check_in_date" id="check_in_date">
-               <input class="form-control" type="date" name="check_out_date" id="check_out_date">
+               <input class="form-control" type="date" name="check_in_date" id="check_in_date" value="{{ session('check_in_date') }}">
+               <input class="form-control" type="date" name="check_out_date" id="check_out_date" value="{{ session('check_out_date') }}">
                <input class="form-control" type="hidden" name="booking" id="booking" value="true">
             </div>        
         </div>      

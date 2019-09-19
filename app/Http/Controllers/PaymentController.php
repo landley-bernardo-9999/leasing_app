@@ -43,6 +43,7 @@ class PaymentController extends Controller
             ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
             ->join('rooms', 'bookings.room_id_foreign', 'rooms.room_id')
             ->groupBy('res_id')
+            ->orderBy('res_full_name')
             ->get();
 
             $billings = Billing::where('booking_id_foreign',$request->request_billings)->get();
@@ -64,6 +65,7 @@ class PaymentController extends Controller
             ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
             ->join('rooms', 'bookings.room_id_foreign', 'rooms.room_id')
             ->groupBy('res_id')
+            
             ->where('booking_id', $booking_id)
             ->get();
 

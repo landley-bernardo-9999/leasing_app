@@ -19,6 +19,7 @@ class RemittanceController extends Controller
             $remittances = DB::table('users')
             ->join('remittances', 'user_id', 'rem_own_id_foreign')
             ->join('rooms', 'user_id', 'own_id_foreign')
+            ->groupBy('room_id')
             ->where('rem_own_id_foreign', auth()->user()->user_id)
             ->get();
 

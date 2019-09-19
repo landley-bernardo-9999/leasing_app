@@ -3,19 +3,24 @@
 @section('content')
 @foreach ($booking as $booking)
 <div class="container">
-    <div class="input-group">
-    @if($booking->requested_at == NULL)
-        <form action="/bookings/{{ $booking->booking_id }}" method="post">
-            @method('put')
-            {{ csrf_field() }}
-            <input type="hidden" name="action" id="action" value="requested">
-            <button class="btn btn-danger" onclick="return confirm('Are you sure you want to perform this operation? ');" type="submit"><i class="fas fa-sign-out-alt"></i> Request for moveout</button>
-        </form>
-    @elseif($booking->approved_at == NULL)
-        <a title="Waiting for the manager's approval." class="btn btn-warning" href="#"><i class="fas fa-sign-out-alt"></i> Request has been sent.</a>
-    @elseif($booking->requested_at != NULL && $booking->approved_at != NULL)
-        <a class="btn btn-primary" href="/bookings/{{ $booking->booking_id }}/edit"><i class="fas fa-sign-out-alt"></i>  Move Out</a>
-    @endif
+    <div class="row">
+        <div class="col-md-10">
+            
+        </div>
+        <div class="col-md-2">
+            @if($booking->requested_at == NULL)
+            <form action="/bookings/{{ $booking->booking_id }}" method="post">
+                @method('put')
+                {{ csrf_field() }}
+                <input type="hidden" name="action" id="action" value="requested">
+                <button class="btn btn-danger" onclick="return confirm('Are you sure you want to perform this operation? ');" type="submit"><i class="fas fa-sign-out-alt"></i> Request for moveout</button>
+            </form>
+            @elseif($booking->approved_at == NULL)
+                <a title="Waiting for the manager's approval." class="btn btn-warning" href="#"><i class="fas fa-sign-out-alt"></i> Request has been sent.</a>
+            @elseif($booking->requested_at != NULL && $booking->approved_at != NULL)
+                <a class="btn btn-primary" href="/bookings/{{ $booking->booking_id }}/edit"><i class="fas fa-sign-out-alt"></i>  Move Out</a>
+            @endif
+        </div>
     </div>
     
     <hr>
@@ -76,7 +81,7 @@
                    </tr>
                    <tr>
                        <td>
-                           {{ $booking->room_no.' '.$booking->room_wing }}
+                           {{ $booking->building.' '.$booking->room_no.' '.$booking->room_wing }}
                        </td>
                    </tr>
                    <tr>

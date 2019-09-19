@@ -18,6 +18,7 @@
                             <input type="hidden" name="room_size" id="room_size" value="{{ $room->room_size }}">
                             <input type="hidden" name="long_term_rent" id="long_term_rent" value="{{ $room->long_term_rent }}">
                             <input type="hidden" name="short_term_rent" id="short_term_rent" value="{{ $room->short_term_rent }}">
+                            <input type="hidden" name="transient_rent" id="transient_rent" value="{{ $room->transient_rent }}">
                             <input type="hidden" name="own_id" id="own_id" value="{{ $room->own_id_foreign }}">
                             <input type="hidden" name="room_id" id="room_id" value="{{ $room->room_id }}">
                             <input type="hidden" name="building" id="building" value="{{ $room->building }}">
@@ -29,24 +30,15 @@
                                     </span>
                                 @enderror
                             <br>
-                            <p>Email</p>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email">
-    
-                            {{-- @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror --}}
-                            <br>
+
                             <p>Mobile</p>
                             <input id="mobile" type="text" class="form-control @error('mobile') is-invalid @enderror" name="mobile" value="{{ old('mobile') }}"  autocomplete="mobile">
-    
-                            @error('mobile')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
                             <br>
+
+                            <p>Email</p>
+                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email">
+                            <br>
+
                             <p>Country</p>
                             <input id="country" type="text" class="form-control @error('country') is-invalid @enderror" name="country" value="PH" required autocomplete="country">
     
@@ -107,7 +99,7 @@
                             <tr>
                                 <td>Check-in</td>
                                 <td>
-                                    <input id="check_in_date" type="date" class="form-control @error('check_in_date') is-invalid @enderror" name="check_in_date" value="{{ session('check_in_date') }}" required autocomplete="check_in_date">
+                                    <input onkeyup="select_term()" id="check_in_date" type="date" class="form-control @error('check_in_date') is-invalid @enderror" name="check_in_date" value="{{ session('check_in_date') }}" required>
     
                                     @error('check_in_date')
                                         <span class="invalid-feedback" role="alert">
@@ -119,7 +111,7 @@
                             <tr>
                                 <td>Check-out</td>
                                 <td>
-                                    <input onkeyup="select_term()" id="check_out_date" type="date" class="form-control @error('check_out_date') is-invalid @enderror" name="check_out_date" value="{{ session('check_out_date') }}" required autocomplete="check_out_date">
+                                    <input onkeyup="select_term()" id="check_out_date" type="date" class="form-control @error('check_out_date') is-invalid @enderror" name="check_out_date" value="{{ session('check_out_date') }}" required >
     
                                     @error('check_out_date')
                                         <span class="invalid-feedback" role="alert">
@@ -128,10 +120,7 @@
                                     @enderror
                                 </td>
                             </tr>
-                            {{-- <tr>
-                                <td>Number of Month/s:</td>
-                                <td><input type="number" name="no_of_mon" id="no_of_mon" class="form-control" readonly></td>
-                            </tr> --}}
+                         
                             <tr>
                                 <td>Booking Term</td>
                                 <td> <input id="booking_term" name="booking_term" type="text" class="form-control" readonly></td>
@@ -141,14 +130,14 @@
                             <table class="table table-borderless">
                                  <tr>
                                     <td>Security Deposit</td>
-                                    <td> <input onkeyup="select_term()" id="sec_dep" name="sec_dep" type="text" class="form-control"></td>
+                                    <td> <input onkeyup="select_term()"  id="sec_dep" name="sec_dep" type="text" class="form-control"></td>
                                 </tr>
                                 <tr>
                                     <td>Utilities Deposit</td>
-                                    <td> <input onkeyup="select_term()" id="util_dep" name="util_dep" value="2000" type="text" class="form-control"></td>
+                                    <td> <input onkeyup="select_term()"  id="util_dep" name="util_dep" value="2000" type="text" class="form-control"></td>
                                 </tr>
                                 <tr>
-                                    <td >Advance Rent<small id="" class="form-text text-muted">Transient Fee </small></td>
+                                    <td id="adv_rent_label">Advance Rent<small id="days_diff" class="form-text text-muted"> </small></td>
                                     <td> <input onkeyup="select_term()"  id="adv_rent" name="adv_rent" type="text" class="form-control"></td>
                                 </tr>
                             </table>
@@ -156,7 +145,7 @@
                             <table class="table table-borderless">
                                 <tr>
                                     <td><h4>TOTAL</h4></td>
-                                    <td id="total_amt" name="total_amt"></td>
+                                    <td id="total_amt" name="total_amt"> </td>
                                 </tr>
                             </table>
                             <p class="text-right"> <button onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn btn-primary" type="submit"><i class="fas fa-arrow-right"></i> Book</button></p>
@@ -180,55 +169,37 @@
         var d2 = new Date(check_out_date);
         var timeDiff = d2.getTime() - d1.getTime();
         var DaysDiff = timeDiff / (1000 * 3600 * 24);
+
     
-        if(DaysDiff => 180 && DaysDiff > 28){
+        if(DaysDiff >= 180 ){
             document.getElementById('booking_term').value =   'LONG TERM' ;
 
-            if(building === 'HARVARD'){
-            document.getElementById('adv_rent').value = '6800';
-            document.getElementById('sec_dep').value = '6800';
-            }
+            document.getElementById('adv_rent').value = document.getElementById('long_term_rent').value;
+            document.getElementById('sec_dep').value = document.getElementById('long_term_rent').value;
+            document.getElementById('util_dep').value = '2000';
 
-            if(building === 'PRINCETON'){
-                document.getElementById('adv_rent').value = '7500';
-                document.getElementById('sec_dep').value = '7500';
-            }
-
-            if(building === 'WHARTON'){
-                document.getElementById('adv_rent').value = '11000';
-                document.getElementById('sec_dep').value = '11000';
-            }
         }
     
-        if(DaysDiff < 180 && DaysDiff > 28){
+        if(DaysDiff < 180 && DaysDiff >=30){
             document.getElementById('booking_term').value =  'SHORT TERM' ;
-            
-            if(building === 'HARVARD'){
-            document.getElementById('adv_rent').value = '6800';
-            document.getElementById('sec_dep').value = '6800';
-            }
+           
+            document.getElementById('adv_rent').value = document.getElementById('long_term_rent').value;
+            document.getElementById('sec_dep').value = document.getElementById('long_term_rent').value;
+            document.getElementById('util_dep').value = '2000';
 
-            if(building === 'PRINCETON'){
-                document.getElementById('adv_rent').value = '7500';
-                document.getElementById('sec_dep').value = '7500';
-            }
-
-            if(building === 'WHARTON'){
-                document.getElementById('adv_rent').value = '11000';
-                document.getElementById('sec_dep').value = '11000';
-            }
         }
     
-        if(DaysDiff <= 28 ){
+        if(DaysDiff < 30 ){
             document.getElementById('booking_term').value = 'TRANSIENT' ;
 
             document.getElementById('util_dep').value = '0';
             document.getElementById('sec_dep').value = '0';
 
             document.getElementById('adv_rent').value = document.getElementById('transient_rent').value * DaysDiff;
+            document.getElementById('adv_rent_label').innerHTML = 'Transient Rent *' + DaysDiff;
+
         }
 
-   
 
         document.getElementById('total_amt').innerHTML =  (parseFloat(document.getElementById('sec_dep').value) +  parseFloat(document.getElementById('util_dep').value) +  parseFloat(document.getElementById('adv_rent').value)).toFixed(2);
 
@@ -245,58 +216,37 @@
         var d2 = new Date(check_out_date);
         var timeDiff = d2.getTime() - d1.getTime();
         var DaysDiff = timeDiff / (1000 * 3600 * 24);
+
     
-        if(DaysDiff => 180 && DaysDiff > 28){
+        if(DaysDiff >= 180 ){
             document.getElementById('booking_term').value =   'LONG TERM' ;
 
-            // if(building === 'HARVARD'){
-            //     document.getElementById('adv_rent').value = '6800';
-            //     document.getElementById('sec_dep').value = '6800';
-            //     document.getElementById('util_dep').value = '2000';
-            // }
+            document.getElementById('adv_rent_label').innerHTML = 'Advance Rent';
 
-            // if(building === 'PRINCETON'){
-            //     document.getElementById('adv_rent').value = '7500';
-            //     document.getElementById('sec_dep').value = '7500';
-            //     document.getElementById('util_dep').value = '2000';
-            // }
-
-            // if(building === 'WHARTON'){
-            //     document.getElementById('adv_rent').value = '11000';
-            //     document.getElementById('sec_dep').value = '11000';
-            //     document.getElementById('util_dep').value = '2000';
-            // }
-        }
-    
-        if(DaysDiff < 180 && DaysDiff > 28){
-            document.getElementById('booking_term').value =  'SHORT TERM' ;
-
-            // if(building === 'HARVARD'){
-            // document.getElementById('adv_rent').value = '6800';
-            // document.getElementById('sec_dep').value = '6800';
+            // document.getElementById('adv_rent').value = document.getElementById('long_term_rent').value;
+            // document.getElementById('sec_dep').value = document.getElementById('long_term_rent').value;
             // document.getElementById('util_dep').value = '2000';
-            // }
 
-            // if(building === 'PRINCETON'){
-            //     document.getElementById('adv_rent').value = '7500';
-            //     document.getElementById('sec_dep').value = '7500';
-            //     document.getElementById('util_dep').value = '2000';
-            // }
-
-            // if(building === 'WHARTON'){
-            //     document.getElementById('adv_rent').value = '11000';
-            //     document.getElementById('sec_dep').value = '11000';
-            //     document.getElementById('util_dep').value = '2000';
-            // }
         }
     
-        if(DaysDiff <= 28 ){
+        if(DaysDiff < 180 && DaysDiff >=30){
+            document.getElementById('booking_term').value =  'SHORT TERM' ;
+            document.getElementById('adv_rent_label').innerHTML = 'Advance Rent';
+
+            // document.getElementById('adv_rent').value = document.getElementById('short_term_rent').value;
+            // document.getElementById('sec_dep').value = document.getElementById('short_term_rent').value;
+            // document.getElementById('util_dep').value = '2000';
+
+        }
+    
+        if(DaysDiff < 30){
             document.getElementById('booking_term').value = 'TRANSIENT' ;
 
-            // document.getElementById('util_dep').value = '0';
-            // document.getElementById('sec_dep').value = '0';
+            document.getElementById('util_dep').value = '0';
+            document.getElementById('sec_dep').value = '0';
 
-            // document.getElementById('adv_rent').value = document.getElementById('transient_rent').value * DaysDiff;
+            document.getElementById('adv_rent').value = document.getElementById('transient_rent').value * DaysDiff;
+            document.getElementById('adv_rent_label').innerHTML = 'Transient Rent *' + DaysDiff;
         }
 
         document.getElementById('total_amt').innerHTML =  (parseFloat(document.getElementById('sec_dep').value) +  parseFloat(document.getElementById('util_dep').value) +  parseFloat(document.getElementById('adv_rent').value)).toFixed(2);

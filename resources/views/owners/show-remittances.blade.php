@@ -8,7 +8,7 @@
                     <tr>
                         <th>#</th>
                         <th>Room No</th>
-                        <th>Billing Date</th>
+                        
                         <th>Date Deposited</th>
                         <th>Amount</th>                      
                     </tr>
@@ -20,7 +20,7 @@
                     <tr>
                         <th>{{ $row_no++ }}</th>
                         <td>{{ $remittance->room_no.' '.$remittance->room_wing }}</td>
-                        <td>{{ \Carbon\Carbon::parse($remittance->created_at)->format('d/m/Y') }}</td>
+                       
                         <td>
                             @if($remittance->date_dep == NULL)
                                 PENDING

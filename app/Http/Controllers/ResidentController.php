@@ -17,15 +17,19 @@ class ResidentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+       $resident_info = $request->resident_info;
+
+       session(['resident_info' => $resident_info]);
+
        $residents =  DB::table('bookings')
                         ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
                         ->join('rooms','bookings.room_id_foreign', 'rooms.room_id')
+                        ->where('res_full_name', 'LIKE', "%$resident_info%")
                         ->orderBy('check_in_date', 'desc')
                         ->get();
                         
-
         return view('residents.show-residents', compact('residents'));
     }
 

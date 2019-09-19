@@ -19,13 +19,13 @@
                                 <select name="request_billings" id="request_billings" class="form-control" onchange="this.form.submit()" form="form1">
                                    @if($residents->count() === 1)
                                         @foreach ($residents as $resident)
-                                            <option value="{{ $resident->booking_id }}" selected>{{ $resident->res_full_name.' - '.$resident->room_no.' '.$resident->room_wing }} </option>
+                                            <option value="{{ $resident->booking_id }}" selected>{{ $resident->res_full_name.' - '.$resident->building.' '.$resident->room_no.' '.$resident->room_wing }} </option>
                                             <input type="hidden" name="res_id" id="res_id" value="{{ $resident->res_id }}" form="form2">
                                         @endforeach
                                    @else
                                         <option value="">Select Resident...</option>
                                         @foreach ($residents as $resident)
-                                            <option value="{{ $resident->booking_id.' '.$resident->res_id }}">{{ $resident->res_full_name.' - '.$resident->room_no.' '.$resident->room_wing }} </option>
+                                            <option value="{{ $resident->booking_id.' '.$resident->res_id }}">{{ $resident->res_full_name.' - '.$resident->building.' '.$resident->room_no.' '.$resident->room_wing }} </option>
                                         @endforeach
                                    @endif
                                 </select>
@@ -159,7 +159,7 @@
                         <tr>
                             <th>{{ $row_no++ }}</th>
                             <td>{{ \Carbon\Carbon::parse($payment->created_at)->format('d/m/Y') }}</td>
-                            <td>{{ \Carbon\Carbon::parse($payment->date_dep)->format('d/m/Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($payment->updated_at)->format('d/m/Y') }}</td>
                             <td>{{ $payment->form_of_pay }}</td>
                             <td>
                                 @if($payment->form_of_pay == 'THRU BANK')

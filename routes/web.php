@@ -45,7 +45,7 @@ Route::get('/', function () {
            ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
            ->join('rooms','bookings.room_id_foreign', 'rooms.room_id')
            ->where('requested_at','!=', NULL)
-           ->where('approved_at','==', NULL)
+           
            ->get();
 
             return view('managers.dashboard', compact('bookings'));
@@ -69,11 +69,15 @@ Route::group(['middleware' => 'verified'], function(){
 
     Route::get('/filter/payments{s?}', 'PaymentController@index')->where('s', '[\w\d]+');
 
+    Route::get('/search/residents{s?}', 'ResidentController@index')->where('s', '[\w\d]+');
+
     Route::get('/owners', function(){
       $owners = DB::table('users')
                 ->join('rooms', 'user_id', 'own_id_foreign') 
                 ->where('role','owner')
+                ->orderBy('name')
                 ->get();
+                
 
         return view('admin.show-owners', compact('owners'));
     });

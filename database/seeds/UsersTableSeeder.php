@@ -11,7 +11,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 1; $i<=100; $i++ ) {
+        for($i = 1; $i<=1; $i++ ) {
         DB::table('users')->insert([
             'user_id' =>  (string) Uuid::generate(4),
             'name' => Str::random(10),

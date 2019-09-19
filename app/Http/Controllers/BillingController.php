@@ -35,7 +35,7 @@ class BillingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      //
     }
 
     /**

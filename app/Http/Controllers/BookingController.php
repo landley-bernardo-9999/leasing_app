@@ -24,7 +24,7 @@ class BookingController extends Controller
     {
         $building = Room::orderBy('site')->orderBy('building')->distinct()->get('building');
         $floor_no = Room::orderBy('floor_no')->distinct()->get('floor_no');
-        $type_of_bed = Room::orderBy('type_of_bed')->distinct()->get('type_of_bed');
+        $type_of_bed = Room::orderBy('type_of_bed')->whereNotNull('type_of_bed')->distinct()->get('type_of_bed');
         $site = Room::orderBy('site')->distinct()->get('site');
 
         return view('bookings.book', compact('building', 'floor_no', 'type_of_bed','site'));
@@ -165,6 +165,7 @@ class BookingController extends Controller
 
                         $remittance = new Remittance();
                         $remittance->rem_amt = $request->long_term_rent - ($payment1->amt_paid + $payment2->amt_paid);
+                        $remittance->created_at = $booking->check_in_date; 
                         $remittance->rem_own_id_foreign = $request->own_id;
                         $remittance->rem_pay_id_foreign = $billing3->bil_id;
                         $remittance->save();
@@ -189,6 +190,7 @@ class BookingController extends Controller
 
                         $remittance = new Remittance();
                         $remittance->rem_amt = $request->long_term_rent - ($payment1->amt_paid + $payment2->amt_paid);
+                        $remittance->created_at = $booking->check_in_date; 
                         $remittance->rem_own_id_foreign = $request->own_id;
                         $remittance->rem_pay_id_foreign = $billing3->bil_id;
                         $remittance->save();
@@ -210,6 +212,7 @@ class BookingController extends Controller
 
                         $remittance = new Remittance();
                         $remittance->rem_amt = $request->long_term_rent - ($payment1->amt_paid + $payment2->amt_paid);
+                        $remittance->created_at = $booking->check_in_date; 
                         $remittance->rem_own_id_foreign = $request->own_id;
                         $remittance->rem_pay_id_foreign = $billing3->bil_id;
                         $remittance->save();
@@ -234,6 +237,7 @@ class BookingController extends Controller
 
                         $remittance = new Remittance();
                         $remittance->rem_amt = $request->long_term_rent - ($payment1->amt_paid + $payment2->amt_paid);
+                        $remittance->created_at = $booking->check_in_date; 
                         $remittance->rem_own_id_foreign = $request->own_id;
                         $remittance->rem_pay_id_foreign = $billing3->bil_id;
                         $remittance->save();
@@ -255,6 +259,7 @@ class BookingController extends Controller
 
                         $remittance = new Remittance();
                         $remittance->rem_amt = $request->long_term_rent - ($payment1->amt_paid + $payment2->amt_paid);
+                        $remittance->created_at = $booking->check_in_date; 
                         $remittance->rem_own_id_foreign = $request->own_id;
                         $remittance->rem_pay_id_foreign = $billing3->bil_id;
                         $remittance->save();
@@ -262,9 +267,7 @@ class BookingController extends Controller
 
                 }
             }
-
             
-
         }catch(\Exception $e){
             $cn->rollBack();
             return back()->withError($e->getMessage());
@@ -321,7 +324,22 @@ class BookingController extends Controller
     public function edit(Booking $booking, Request $request)
     {
         if($booking->approved_at != null){
-            return view('bookings.moveout-form');
+            $booking = Booking::findOrFail($booking->booking_id);
+
+            $billings = Billing::where('booking_id_foreign', $booking->booking_id)->get();
+
+            $sec_dep = Billing::where('booking_id_foreign', $booking->booking_id)->whereIn('desc',['SECURITY DEPOSIT', 'UTILITIES DEPOSIT'])->get();
+
+            $payments = DB::table('residents')
+            ->leftJoin('bookings', 'res_id', 'res_id_foreign')
+            ->leftJoin('payments', 'res_id', 'resident_id_foreign')
+            ->where('desc', NULL)
+            ->where('booking_id', $booking->booking_id)
+            ->get();
+
+            $balance = $billings->sum('bil_amt') - $payments->sum('amt_paid');
+
+            return view('bookings.moveout-form', compact('booking', 'balance', 'sec_dep'));
         }else{
             return abort(404);
         }
@@ -350,6 +368,8 @@ class BookingController extends Controller
             $booking->save();
 
             return back()->with('success', 'Request has been approved!');   
+        }else{
+            return 'this is for move-out form.';
         }
 
     }
