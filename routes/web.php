@@ -1,5 +1,7 @@
 <?php
 
+use App\Room;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,11 +21,32 @@ Route::get('/', function () {
     }
     else{
         if(auth()->user()->role === 'admin'){
-            $rooms = App\Room::all();
+            $rooms = Room::all();
             $bookings = App\Booking::all();
             $owners = App\User::where('role', 'owner')->get();
 
-            return view('dashboard', compact('rooms', 'bookings', 'owners'));
+            $occupied_rooms_harvard =Room::where('building', 'HARVARD')->where('room_status', 'OCCUPIED')->count();
+            $vacant_rooms_harvard = Room::where('building', 'HARVARD')->where('room_status', 'VACANT')->count();
+            $reserved_rooms_harvard = Room::where('building', 'HARVARD')->where('room_status', 'RESERVED')->count();
+            $rectification_rooms_harvard =Room::where('building', 'HARVARD')->where('room_status', 'RECTIFICATION')->count();
+    
+            $occupied_rooms_princeton= Room::where('building', 'PRINCETON')->where('room_status', 'OCCUPIED')->count();
+            $vacant_rooms_princeton = Room::where('building', 'PRINCETON')->where('room_status', 'VACANT')->count();
+            $reserved_rooms_princeton = Room::where('building', 'PRINCETON')->where('room_status', 'RESERVED')->count();
+            $rectification_rooms_princeton = Room::where('building', 'PRINCETON')->where('room_status', 'RECTIFICATION')->count();
+    
+            $occupied_rooms_wharton = Room::where('building', 'WHARTON')->where('room_status', 'OCCUPIED')->count();
+            $vacant_rooms_wharton = Room::where('building', 'WHARTON')->where('room_status', 'VACANT')->count();
+            $reserved_rooms_wharton = Room::where('building', 'WHARTON')->where('room_status', 'RESERVED')->count();
+            $rectification_rooms_wharton = Room::where('building', 'WHARTON')->where('room_status', 'RECTIFICATION')->count();
+
+            return view('dashboard', 
+                    compact('rooms', 'bookings', 'owners', 
+                            'occupied_rooms_harvard', 'vacant_rooms_harvard', 'reserved_rooms_harvard', 'rectification_rooms_harvard',
+                            'occupied_rooms_princeton', 'vacant_rooms_princeton', 'reserved_rooms_princeton', 'rectification_rooms_princeton',
+                            'occupied_rooms_wharton', 'vacant_rooms_wharton', 'reserved_rooms_wharton', 'rectification_rooms_wharton'
+                            )
+                        );
         }elseif(auth()->user()->role === 'owner'){
             $rooms = DB::table('rooms')
                 ->join('users', 'rooms.own_id_foreign', 'users.user_id')
@@ -63,6 +86,7 @@ Route::group(['middleware' => 'verified'], function(){
         'payments' => 'PaymentController',
         'billings' => 'BillingController',
         'remittances' => 'RemittanceController',
+        'users' => 'UserController',
     ]);
 
     Route::get('/search/payments{s?}', 'PaymentController@create')->where('s', '[\w\d]+');
@@ -70,17 +94,8 @@ Route::group(['middleware' => 'verified'], function(){
     Route::get('/filter/payments{s?}', 'PaymentController@index')->where('s', '[\w\d]+');
 
     Route::get('/search/residents{s?}', 'ResidentController@index')->where('s', '[\w\d]+');
-
-    Route::get('/owners', function(){
-      $owners = DB::table('users')
-                ->join('rooms', 'user_id', 'own_id_foreign') 
-                ->where('role','owner')
-                ->orderBy('name')
-                ->get();
-                
-
-        return view('admin.show-owners', compact('owners'));
-    });
+    
+    Route::get('/search/users{s?}', 'UserController@index')->where('s', '[\w\d]+');
 
 });
 
