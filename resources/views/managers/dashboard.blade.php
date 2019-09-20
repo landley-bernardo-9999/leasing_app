@@ -21,11 +21,11 @@
         <tr>
             <th>{{ $row_no++ }}</th>
             <td><a href="bookings/{{ $booking->booking_id }}">{{ $booking->res_full_name }}</a></td>
-            <td>{{ $booking->room_no.' '.$booking->room_wing }}</td>
+            <td>{{ substr($booking->building, 0, 1).'-'.$booking->room_no.' '.substr($booking->room_wing, 0, 1) }}</td>
             <td>{{ \Carbon\Carbon::parse($booking->check_in_date)->format('d/m/Y').' - '.\Carbon\Carbon::parse($booking->check_out_date)->format('d/m/Y')}} </td>
             <td>
                @if($booking->approved_at != NULL)
-                    <a href="#/" class="btn btn-primary">Approved</a>
+                    <a href="#/" class="btn btn-dark"><i class="fas fa-check-double"></i> Approved</a> @ {{ \Carbon\Carbon::parse($booking->approved_at)->format('d/m/Y') }}
                 @else
                 <form action="/bookings/{{ $booking->booking_id }}" method="post">
                     @method('put')

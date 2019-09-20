@@ -72,6 +72,13 @@ Route::get('/', function () {
            ->get();
 
             return view('managers.dashboard', compact('bookings'));
+        }elseif(auth()->user()->role === 'web admin'){
+
+            $users = App\User::all();
+
+            $sessions = DB::table('sessions')->whereNotNull('user_id')->get();
+
+            return view('web_admin.dashboard', compact('users', 'sessions'));
         }
 
     }
@@ -96,6 +103,17 @@ Route::group(['middleware' => 'verified'], function(){
     Route::get('/search/residents{s?}', 'ResidentController@index')->where('s', '[\w\d]+');
     
     Route::get('/search/users{s?}', 'UserController@index')->where('s', '[\w\d]+');
+
+    Route::get('/active-sessions', function(){
+
+         $sessions = DB::table('users')
+                ->join('sessions','users.user_id', 'sessions.user_id')
+                ->whereNotNull('sessions.user_id')
+                ->orderBy('name')
+                ->get();
+
+        return view('web_admin.show-active-sessions', compact('sessions'));
+    });
 
 });
 

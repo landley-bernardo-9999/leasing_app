@@ -77,6 +77,7 @@
                                    <option value="manager" value="{{ old('role') }}">manager</option>
                                    <option value="owner" value="{{ old('role') }}" selected>owner</option>
                                    <option value="treasury" value="{{ old('role') }}">treasury</option>
+                                   <option value="web admin" value="{{ old('role') }}">web admin</option>
                                </select>
 
                                 @error('role')
@@ -92,7 +93,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" value="12345678" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" value="" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -106,7 +107,7 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" value="12345678" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
 

@@ -14,11 +14,11 @@
                 </form>
                <div class="card-body">
                    <table class="table">
-                       
                         <p class="text-right" ><button form="edit-user-form" type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn btn-primary"><i class="fas fa-arrow-right"></i>&nbspSave</button></p>
                         <tr>
                             <th>Name:</th>
-                            <td><input form="edit-user-form"  type="text" class="form-control" name="name" value="{{ $user->name }}" /></td>
+                            <td><input form="edit-user-form"  type="text" class="form-control" name="name" value="{{ $user->name }}" />
+                                <input form="edit-user-form"  type="hidden" class="form-control" name="action" value="update_info" /></td>
                         </tr>
                          <tr>
                             <th>Username:</th>

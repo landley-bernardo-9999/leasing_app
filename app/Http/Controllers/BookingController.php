@@ -369,10 +369,32 @@ class BookingController extends Controller
 
             return back()->with('success', 'Request has been approved!');   
         }else{
-            return 'this is for move-out form.';
+
+            $no_of_items = (int) $request->no_of_items; 
+            
+            $booking = Booking::findOrFail($booking->booking_id);
+            $booking->reason_for_moving_out = $request->reason_for_moving_out;
+            $booking->actual_check_out_date = $request->actual_check_out_date;
+            $booking->initial_water_reading = $request->initial_water_reading;
+            $booking->final_water_reading = $request->final_water_reading;
+            $booking->initial_electric_reading = $request->initial_electric_reading;
+            $booking->final_electric_reading = $request->final_electric_reading;
+            $booking->booking_status = 'MOVING OUT';
+            $booking->save();
+
+            for($i = 0; $i<$no_of_items; $i++){
+                $billing = new Billing();
+                $billing->desc =    $request->input('item'.$i);
+                $billing->bil_amt =  $request->input('total'.$i);
+                $billing->booking_id_foreign = $booking->booking_id;
+                $billing->created_at = $request->actual_move_out_date;
+                $billing->save();
+            }
+           
+            return redirect('/bookings/'.$booking->booking_id)->with('success', 'Moveout has been processed!'); 
         }
 
-    }
+    }   
 
     /**
      * Remove the specified resource from storage.

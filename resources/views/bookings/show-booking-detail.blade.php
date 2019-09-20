@@ -18,7 +18,11 @@
             @elseif($booking->approved_at == NULL)
                 <a title="Waiting for the manager's approval." class="btn btn-warning" href="#"><i class="fas fa-sign-out-alt"></i> Request has been sent.</a>
             @elseif($booking->requested_at != NULL && $booking->approved_at != NULL)
-                <a class="btn btn-primary" href="/bookings/{{ $booking->booking_id }}/edit"><i class="fas fa-sign-out-alt"></i>  Move Out</a>
+                @if($booking->booking_status == 'ACTIVE' )
+                    <a class="btn btn-primary" href="/bookings/{{ $booking->booking_id }}/edit"><i class="fas fa-sign-out-alt"></i>  Move Out</a>
+                @else
+                    <a class="btn btn-dark" href="#/"><i class="fas fa-sign-out-alt"></i>  MOVING OUT</a>
+                @endif
             @endif
         </div>
     </div>

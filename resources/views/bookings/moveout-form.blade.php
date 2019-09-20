@@ -3,16 +3,22 @@
 @section('title', 'Move Out Form')
 @section('content')
 <div class="container">
-    <table class="table table-borderless">
+    <div class="row">
+        <form id="move_out_form" action="/bookings/{{ $booking->booking_id }}" method="POST">
+            @method('PUT')
+            {{ csrf_field() }}
+        </form>
+      <div class="col-md-12">
+            <table class="table table-borderless">
         <h3>Move Out Form</h3>
         <hr>
         <br>
         <tr>
             <th>Actual Move out Date:</th>
-            <td><input type="date" class="form-control" value="{{ $booking->check_out_date }}" style="width:60%"></td>
+            <td><input form="move_out_form" type="date" name="actual_check_out_date" class="form-control" value="{{ $booking->check_out_date }}" style="width:60%"></td>
             <th>Reason for moving out:</th>
             <td>
-                <select name="reason_for_moving_out" class="form-control" style="width:70%" required>
+                <select form="move_out_form" name="reason_for_moving_out" class="form-control" style="width:70%">
                     <option value="" selected>Select Reason</option>
                     <option value="cancelled">Cancelled</option>
                     <option value="delinquent">Delinquent</option>
@@ -38,15 +44,15 @@
             
             <tr>
                 <td>Initial:  </td>
-                <td><input type="text" class="form-control" style="width:50%" name="initial_water_reading" value="{{ $booking->final_water_reading }}" ></td>
+                <td><input form="move_out_form" type="text" class="form-control" style="width:50%" name="initial_water_reading" value="{{ $booking->final_water_reading }}" ></td>
                 <td>Initial: </td>
-                <td><input type="text" class="form-control" style="width:50%" name="initial_electric_reading" value="{{ $booking->final_electric_reading }}" ></td>
+                <td><input form="move_out_form" type="text" class="form-control" style="width:50%" name="initial_electric_reading" value="{{ $booking->final_electric_reading }}" ></td>
             </tr>
             <tr>
                 <td>Final </td>
-                <td><input type="text" class="form-control" style="width:50%" name="final_water_reading" value="{{ $booking->final_water_reading }}" ></td>
+                <td><input form="move_out_form" type="text" class="form-control" style="width:50%" name="final_water_reading" value="{{ $booking->final_water_reading }}" ></td>
                 <td>Final  </td>
-                <td><input type="text" class="form-control" style="width:50%" name="final_electric_reading" value="{{ $booking->final_electric_reading }}" ></td>
+                <td><input form="move_out_form" type="text" class="form-control" style="width:50%" name="final_electric_reading" value="{{ $booking->final_electric_reading }}" ></td>
         </tr>
         </table>
         <br>
@@ -66,55 +72,88 @@
             <li>{{ $sec_dep->desc.' - '.number_format($sec_dep->bil_amt,2) }}</li>        
                 @endforeach
         </ul>
-           
-              
-        <br>
-            <div class="row">
-                    <div class="control-group" id="fields">
-                        <label class="control-label" for="field1">Mandatory Move Out Charges</label>
-                            <form role="form" autocomplete="off">
-                                <div class="entry input-group col-xs-3">
-                                   
-                                    <input type="text">
-                                        <button class="btn btn-success btn-add" type="button">
-                                            Add
-                                        </button>
-                                    
-                                </div>
-                                <br>
-                            </form>
-    
-                    </div>
-                </div>
+      </div>
+    </div>
+    <br>
+    <h3>Move out charges</h3>
+    <hr>
+        <div class="row">
+            <a id="add_row" class="btn btn-default pull-left btn btn-primary"><i class="fas fa-plus"></i> Add Row</a><a id='delete_row' class="pull-right btn btn-default btn btn-danger"><i class="fas fa-minus"></i> Delete Row</a>
+		<div class="col-md-12">
+            <br>
+			<table class = "table table-bordered table-hover" id="tab_logic">
+				<thead>
+					<tr >
+						<th class="text-center">
+							#
+						</th>
+						<th class="text-center">
+							Category
+						</th>
+						<th class="text-center">
+							Item/Material
+						</th>
+						<th class="text-center">
+							Quantity
+                        </th>
+                        <th class="text-center">
+							Amount
+                        </th>
+                        <th class="text-center">
+							Total
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+                        <input form="move_out_form" type="hidden" id="no_of_items" name="no_of_items" >
+					<tr id='addr0'>
+						<td>
+						1
+						</td>
+						<td>
+                        <input form="move_out_form" type="text" name='category0'  placeholder='Category' class="form-control"/>
+						</td>
+						<td>
+						<input form="move_out_form" type="text" name='item0' placeholder='Item/Material' class="form-control"/>
+						</td>
+						<td>
+						<input form="move_out_form" type="text" name='quantity0' placeholder='Quantity' class="form-control"/>
+                        </td>
+                        <td>
+						<input form="move_out_form" type="text" name='amount0' placeholder='Amount' class="form-control"/>
+                        </td>
+                        <td>
+						<input form="move_out_form" type="text" name='total0' placeholder='Total' class="form-control"/>
+						</td>
+					</tr>
+                    <tr id='addr1'></tr>
+                </tbody>
+			</table>
+		</div>
+        </div>
+        <p class="text-right" ><button form="move_out_form" type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn btn-primary"><i class="fas fa-arrow-right"></i>&nbspMove Out</button></p>
+</div>
+<br>
 @endsection
 <script type="text/javascript">
+     $(document).ready(function(){
+      var i=1;
 
+     $("#add_row").click(function(){
+      $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input form='move_out_form' name='category"+i+"' type='text' placeholder='Category' class='form-control input-md'  /> </td><td><input form='move_out_form' name='item"+i+"' type='text' placeholder='Item/Material'  class='form-control input-md'></td><td><input form='move_out_form'  name='quantity"+i+"' type='text' placeholder='Quantity'  class='form-control input-md'></td><td><input  form='move_out_form' name='amount"+i+"' type='text' placeholder='Amount'  class='form-control input-md'></td><td><input form='move_out_form' name='total"+i+"' type='text' placeholder='Total'  class='form-control input-md'></td>");
+form="move_out_form"
+      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+      i++; 
+      document.getElementById('no_of_items').value = i;
+  });
+     $("#delete_row").click(function(){
+    	 if(i>1){
+		 $("#addr"+(i-1)).html('');
+		 i--;
+         document.getElementById('no_of_items').value = i;
+		 }
+	 });
 
-$(function()
-{
-    $(document).on('click', '.btn-add', function(e)
-    {
-        e.preventDefault();
-
-        var controlForm = $('.controls form:first'),
-            currentEntry = $(this).parents('.entry:first'),
-            newEntry = $(currentEntry.clone()).appendTo(controlForm);
-
-        newEntry.find('input').val('');
-        controlForm.find('.entry:not(:last) .btn-add')
-            .removeClass('btn-add').addClass('btn-remove')
-            .removeClass('btn-success').addClass('btn-danger')
-            .html('Remove');
-    }).on('click', '.btn-remove', function(e)
-    {
-		$(this).parents('.entry:first').remove();
-
-		e.preventDefault();
-		return false;
-	});
 });
-
-
-
 </script>
 

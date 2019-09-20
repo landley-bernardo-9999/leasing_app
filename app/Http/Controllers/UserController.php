@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\User;
+use Hash;
 
 class UserController extends Controller
 {
@@ -15,18 +16,23 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $owner_info = $request->owner_info;
+        if(auth()->user()->role === 'web admin'){
+            $users = $users = User::where('role', '!=', 'web admin' )->orderBy('name')->get();
 
-        session(['owner_info' => $owner_info]);
+            return view('web_admin.show-all-users', compact('users'));
+        }else{
+            $owner_info = $request->owner_info;
+            session(['owner_info' => $owner_info]);
+            $owners = DB::table('users')
+            ->join('rooms', 'user_id', 'own_id_foreign') 
+            ->where('role','owner')
+            ->where('name', 'LIKE', "%$owner_info%")
+            ->orderBy('name')
+            ->get();
 
-        $owners = DB::table('users')
-        ->join('rooms', 'user_id', 'own_id_foreign') 
-        ->where('role','owner')
-        ->where('name', 'LIKE', "%$owner_info%")
-        ->orderBy('name')
-        ->get();
-        
-        return view('admin.show-owners', compact('owners'));
+            return view('admin.show-owners', compact('owners'));
+        }
+       
     }
 
     /**
@@ -84,14 +90,31 @@ class UserController extends Controller
      */
     public function update(Request $request, $user_id)
     {
-        $user = User::findOrFail($user_id);
-        $user->name = $request->name;
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->mobile_number = $request->mobile_number;
-        $user->save();
+        if($request->action == 'update_info'){
+            $user = User::findOrFail($user_id);
+            $user->name = $request->name;
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->mobile_number = $request->mobile_number;
+            $user->save();
+    
+            return redirect('/users/'.$user_id)->with('success', 'Account Information has been updated!');
 
-        return redirect('/users/'.$user_id)->with('success', 'Account Information has been updated!');
+        }elseif($request->action == 'update_pass'){
+            
+            $request->validate([
+                // 'current_pass' => ['required'],
+                'new_pass' => ['required'],
+                'confirm_new_pass' => ['same:new_pass'],
+            ]);
+
+             $user = User::findOrFail($user_id);
+             $user->password=Hash::make($request->new_pass);
+             $user->save();
+
+             return back()->with('success', 'Password has been changed successfully!');
+         
+        }
     }
 
     /**
@@ -100,8 +123,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user_id)
     {
-        //
+        
+        User::where('user_id', $user_id)->delete();
+
+        return redirect('/users')->with('success', 'User has been deleted!');
     }
 }

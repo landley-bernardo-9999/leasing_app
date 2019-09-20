@@ -128,14 +128,10 @@ class ResidentController extends Controller
      */
     public function destroy(Request $request, $res_id)
     {
-        
         Resident::where('res_id', $res_id)->delete();
         Booking::where('res_id_foreign', $res_id)->delete();
-
         Payment::where('resident_id_foreign', $res_id)->delete();
-
         Guardian::where('res_guar_foreign_id', $res_id)->delete();
-
         Room::
         where('room_id', $request->room_id)
         ->update([
