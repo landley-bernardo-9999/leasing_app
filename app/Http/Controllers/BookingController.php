@@ -302,7 +302,7 @@ class BookingController extends Controller
                         ->groupBy('res_id')
                         ->get();
                         
-        $billings = Billing::where('booking_id_foreign', $booking_id)->get(); 
+        $billings = Billing::where('booking_id_foreign', $booking_id)->orderBy('created_at', 'desc')->get(); 
 
         $payments = DB::table('residents')
             ->leftJoin('bookings', 'res_id', 'res_id_foreign')
@@ -323,7 +323,7 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking, Request $request)
     {
-        if($booking->approved_at != null){
+        if($booking->approved_at != null && $booking->booking_status == 'ACTIVE'){
             $booking = Booking::findOrFail($booking->booking_id);
 
             $billings = Billing::where('booking_id_foreign', $booking->booking_id)->get();
@@ -379,7 +379,7 @@ class BookingController extends Controller
             $booking->final_water_reading = $request->final_water_reading;
             $booking->initial_electric_reading = $request->initial_electric_reading;
             $booking->final_electric_reading = $request->final_electric_reading;
-            $booking->booking_status = 'MOVING OUT';
+            $booking->booking_status = 'INACTIVE';
             $booking->save();
 
             for($i = 0; $i<$no_of_items; $i++){

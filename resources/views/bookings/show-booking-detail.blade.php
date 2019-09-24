@@ -19,9 +19,9 @@
                 <a title="Waiting for the manager's approval." class="btn btn-warning" href="#"><i class="fas fa-sign-out-alt"></i> Request has been sent.</a>
             @elseif($booking->requested_at != NULL && $booking->approved_at != NULL)
                 @if($booking->booking_status == 'ACTIVE' )
-                    <a class="btn btn-primary" href="/bookings/{{ $booking->booking_id }}/edit"><i class="fas fa-sign-out-alt"></i>  Move Out</a>
+                    <a class="btn btn-success" href="/bookings/{{ $booking->booking_id }}/edit"><i class="fas fa-sign-out-alt"></i>  Move Out</a>
                 @else
-                    <a class="btn btn-dark" href="#/"><i class="fas fa-sign-out-alt"></i>  MOVING OUT</a>
+                    <a class="btn btn-dark" href="#/"><i class="fas fa-sign-out-alt"></i>  {{ $booking->booking_status }}</a>
                 @endif
             @endif
         </div>
@@ -96,6 +96,24 @@
                             {{ \Carbon\Carbon::parse($booking->check_in_date)->format('d/m/Y').' - '.\Carbon\Carbon::parse($booking->check_out_date)->format('d/m/Y')}} 
                        </td>
                    </tr>
+                   @if($booking->booking_status != 'ACTIVE')
+                   <tr>
+                       <th>Actual Check Out Date</th>
+                   </tr>
+                   <tr>
+                       <td>
+                           {{  \Carbon\Carbon::parse($booking->actual_check_out_date)->format('d/m/Y') }}
+                       </td>
+                   </tr>
+                    <tr>
+                       <th>Reason For Moving Out</th>
+                   </tr>
+                   <tr>
+                       <td>
+                           {{ $booking->reason_for_moving_out }}
+                       </td>
+                   </tr>
+                    @endif
                    <tr>
                        <th>Term</th>
                    </tr>

@@ -15,10 +15,10 @@
         <br>
         <tr>
             <th>Actual Move out Date:</th>
-            <td><input form="move_out_form" type="date" name="actual_check_out_date" class="form-control" value="{{ $booking->check_out_date }}" style="width:60%"></td>
+            <td><input form="move_out_form" type="date" name="actual_check_out_date" class="form-control" value="{{ $booking->check_out_date }}" style="width:60%" required></td>
             <th>Reason for moving out:</th>
             <td>
-                <select form="move_out_form" name="reason_for_moving_out" class="form-control" style="width:70%">
+                <select form="move_out_form" name="reason_for_moving_out" class="form-control" style="width:70%" required>
                     <option value="" selected>Select Reason</option>
                     <option value="cancelled">Cancelled</option>
                     <option value="delinquent">Delinquent</option>
@@ -87,9 +87,7 @@
 						<th class="text-center">
 							#
 						</th>
-						<th class="text-center">
-							Category
-						</th>
+						
 						<th class="text-center">
 							Item/Material
 						</th>
@@ -111,19 +109,16 @@
 						1
 						</td>
 						<td>
-                        <input form="move_out_form" type="text" name='category0'  placeholder='Category' class="form-control"/>
-						</td>
-						<td>
 						<input form="move_out_form" type="text" name='item0' placeholder='Item/Material' class="form-control"/>
 						</td>
 						<td>
-						<input form="move_out_form" type="text" name='quantity0' placeholder='Quantity' class="form-control"/>
+						<input onkeyup="computeTotal()" form="move_out_form" type="text" name='quantity0' id='quantity0' placeholder='Quantity' class="form-control"/>
                         </td>
                         <td>
-						<input form="move_out_form" type="text" name='amount0' placeholder='Amount' class="form-control"/>
+						<input onkeyup="computeTotal()" form="move_out_form" type="text" name='amount0' id='amount0' placeholder='Amount' class="form-control"/>
                         </td>
                         <td>
-						<input form="move_out_form" type="text" name='total0' placeholder='Total' class="form-control"/>
+						<input form="move_out_form" type="text" name='total0' id='total0' placeholder='Total' class="form-control" />
 						</td>
 					</tr>
                     <tr id='addr1'></tr>
@@ -138,9 +133,8 @@
 <script type="text/javascript">
      $(document).ready(function(){
       var i=1;
-
      $("#add_row").click(function(){
-      $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input form='move_out_form' name='category"+i+"' type='text' placeholder='Category' class='form-control input-md'  /> </td><td><input form='move_out_form' name='item"+i+"' type='text' placeholder='Item/Material'  class='form-control input-md'></td><td><input form='move_out_form'  name='quantity"+i+"' type='text' placeholder='Quantity'  class='form-control input-md'></td><td><input  form='move_out_form' name='amount"+i+"' type='text' placeholder='Amount'  class='form-control input-md'></td><td><input form='move_out_form' name='total"+i+"' type='text' placeholder='Total'  class='form-control input-md'></td>");
+      $('#addr'+i).html("<td>"+ (i+1) +"</td><td><input form='move_out_form' name='item"+i+"' type='text' placeholder='Item/Material'  class='form-control input-md'></td><td><input onkeyup='computeTotal()' form='move_out_form'  name='quantity"+i+"' type='text' placeholder='Quantity'  class='form-control input-md'></td><td><input onkeyup='computeTotal()' form='move_out_form' name='amount"+i+"' type='text' placeholder='Amount'  class='form-control input-md'></td><td><input form='move_out_form' name='total"+i+"' type='text' placeholder='Total'  class='form-control input-md'></td>");
 form="move_out_form"
       $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
       i++; 
@@ -155,5 +149,10 @@ form="move_out_form"
 	 });
 
 });
+
+    //  function computeTotal(){
+    // document.getElementById('total'+$i).value = parseFloat(document.getElementById('quantity'+$i).value) * parseFloat(document.getElementById('amount'+$i).value).toFixed(2);
+    // }
+
 </script>
 

@@ -12,11 +12,18 @@
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-city"></i></span>
                 </div>
                 <select class="form-control" name="site" id="site" >
+                    @if(session('site') == NULL)
+                    <option value=""><small id="" class="form-text text-muted">...</small></option>
+                    @foreach ($site as $row)
+                    <option value="{{ $row->site }}">{{ $row->site }}</option>
+                    @endforeach
+                    @else
                     <option value="{{ session('site') }}" selected>{{ session('site') }} </option>
                     <option value=""><small id="" class="form-text text-muted">...</small></option>
                     @foreach ($site as $row)
                     <option value="{{ $row->site }}">{{ $row->site }}</option>
                     @endforeach
+                    @endif
                 </select>
             </div>
         </div>
@@ -30,11 +37,19 @@
                 
                
                 <select class="form-control" name="building" id="building" >
+                    @if(session('building') == NULL)
+                    <option value=""><small id="" class="form-text text-muted">...</small></option>
+                    @foreach ($building as $row)
+                    <option value="{{ $row->building }}">{{ $row->building }}</option>
+                    @endforeach
+                    @else
                     <option value="{{ session('building') }}"  selected>{{ session('building') }}</option>
                     <option value=""><small id="" class="form-text text-muted">...</small></option>
                     @foreach ($building as $row)
                     <option value="{{ $row->building }}">{{ $row->building }}</option>
                     @endforeach
+                    @endif
+                   
                 </select>
                 
 

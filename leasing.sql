@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 19, 2019 at 09:09 AM
+-- Generation Time: Sep 20, 2019 at 08:57 AM
 -- Server version: 5.7.21
 -- PHP Version: 7.2.4
 
@@ -1053,7 +1053,7 @@ INSERT INTO `bookings` (`booking_id`, `check_in_date`, `check_out_date`, `actual
 ('80fcaf9e-ac37-4aec-a453-05a3a7f4fe31', '2017-08-14', '2020-02-14', NULL, 'LONG TERM', 'ACTIVE', NULL, NULL, NULL, NULL, NULL, 'd9943876-f2fc-41be-909c-26f0520d5d75', 'b68a3b91-93bb-468c-a016-ac788bb277f8', '2019-09-18 21:46:08', '2019-09-18 21:46:08', NULL, NULL),
 ('2cb30613-a4c8-43a2-b9df-5c0a115b5f02', '2017-07-22', '2020-01-22', NULL, 'LONG TERM', 'ACTIVE', NULL, NULL, NULL, NULL, NULL, 'f186ac7c-61f4-45b8-82dc-08aa67168d18', '85436c13-7cbc-4d80-b1da-4e7be2b82d0b', '2019-09-18 21:47:13', '2019-09-18 21:47:13', NULL, NULL),
 ('168d00a4-e715-4a2d-9471-1b5ea4dc3fab', '2019-03-18', '2019-09-18', NULL, 'LONG TERM', 'ACTIVE', NULL, NULL, NULL, NULL, NULL, 'da046fb9-962b-42da-956a-f7b6034869d5', '5b17d76b-f46b-43b7-9789-d1f7f65e39ef', '2019-09-18 21:48:11', '2019-09-18 21:48:11', NULL, NULL),
-('ecb7aec7-bd12-4097-96b0-a26e4457098c', '2019-09-20', '2020-09-20', NULL, 'LONG TERM', 'ACTIVE', NULL, NULL, NULL, NULL, NULL, '105aac13-59db-492d-ae0a-32a2b60e744f', '1c2c3892-d724-404b-9489-50e15c8dbece', '2019-09-18 21:49:13', '2019-09-18 21:49:13', NULL, NULL),
+('ecb7aec7-bd12-4097-96b0-a26e4457098c', '2019-09-20', '2020-09-20', NULL, 'LONG TERM', 'ACTIVE', NULL, NULL, NULL, NULL, NULL, '105aac13-59db-492d-ae0a-32a2b60e744f', '1c2c3892-d724-404b-9489-50e15c8dbece', '2020-09-19 16:00:00', '2019-09-20 00:49:00', NULL, '2019-09-19 16:00:00'),
 ('221a7bfe-fd91-48f4-a781-f4c7cf4b2bb9', '2018-02-01', '2019-06-01', NULL, 'LONG TERM', 'ACTIVE', NULL, NULL, NULL, NULL, NULL, '7ea4f9bc-07bd-46d4-aaad-5132e252fc18', '895239fd-ebb9-4b5b-b483-04f9c3016f7a', '2019-09-18 21:50:55', '2019-09-18 21:50:55', NULL, NULL),
 ('07b24266-7f12-49f7-9910-84f8b6bf0294', '2019-06-28', '2019-12-28', NULL, 'LONG TERM', 'ACTIVE', NULL, NULL, NULL, NULL, NULL, '020911d8-a617-48c7-8314-db88a27ed55f', 'e34c5bba-7845-4138-b505-52715ca13e6d', '2019-09-18 21:53:47', '2019-09-18 21:53:47', NULL, NULL),
 ('600bb147-1e17-4278-9113-595694a17199', '2018-09-09', '2019-09-09', NULL, 'LONG TERM', 'ACTIVE', NULL, NULL, NULL, NULL, NULL, 'e6e578bd-4b36-4b6d-85c7-f3ba38938772', '760debef-76be-46e0-b037-b4ec1cbf8486', '2019-09-18 21:54:54', '2019-09-18 21:54:54', NULL, NULL),
@@ -1383,6 +1383,13 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
   `created_at` timestamp NULL DEFAULT NULL,
   KEY `password_resets_email_index` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('landleydgreat@gmail.com', '$2y$10$DKubCeLWK9Jbt.IkvcHLRuOZ0bp2/mU.U5xBcetDfxW78DUzjh7MS', '2019-09-19 18:41:15');
 
 -- --------------------------------------------------------
 
@@ -2984,9 +2991,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('ZdKPNAp4Uaon6KLkRUVTzIhuiVJSPVr6uw649t7p', 'e74f918f-413f-48a7-8040-1eda5fda1e8c', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiVVdHbkx3cEdIUHh0YkRNNXdtNDA5MmZBTGVKdWVrTUhPVThNN3RDdCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO3M6MzY6ImU3NGY5MThmLTQxM2YtNDhhNy04MDQwLTFlZGE1ZmRhMWU4YyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NjQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9yb29tcy9mNDcyNTdjYy1jNzk4LTQ3MWEtODU5YS1kNTk3OGJiZWMxOTciO319', 1568882615),
-('5eELaxb0ZWSmGL25vahiBFOgwBVcSkc6IesJci4o', 'e74f918f-413f-48a7-8040-1eda5fda1e8c', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiVXlacHRYc2MwMHVRTjhqNEQ3TUJ2dWN2SmlXbHVOb3hJOTBwMW5PNSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NjQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9yb29tcy9mNDcyNTdjYy1jNzk4LTQ3MWEtODU5YS1kNTk3OGJiZWMxOTciO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7czozNjoiZTc0ZjkxOGYtNDEzZi00OGE3LTgwNDAtMWVkYTVmZGExZThjIjt9', 1568883893),
-('4rOr54H9sYpFp3undNLpEf9CsmcdJ6FC7LVxPIcA', '9f081865-897c-4df9-a62a-30babbc4f0ef', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36', 'YToxMTp7czo2OiJfdG9rZW4iO3M6NDA6IlRHU0hEaU9PU2x4MlZsejFtOWdGZ0tuRm91Y2hCUmpscWtFVURhazIiO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjY0OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvdXNlcnMvOWYwODE4NjUtODk3Yy00ZGY5LWE2MmEtMzBiYWJiYzRmMGVmIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO3M6MzY6IjlmMDgxODY1LTg5N2MtNGRmOS1hNjJhLTMwYmFiYmM0ZjBlZiI7czo3OiJib29raW5nIjtzOjU6ImZhbHNlIjtzOjQ6InNpdGUiO3M6MTU6Ik5PUlRIIENBTUJSSURHRSI7czo4OiJidWlsZGluZyI7czo3OiJIQVJWQVJEIjtzOjg6ImZsb29yX25vIjtzOjE6IlUiO3M6MTE6InR5cGVfb2ZfYmVkIjtOO3M6MTM6InJlc2lkZW50X2luZm8iO3M6MzoiamtrIjtzOjEwOiJvd25lcl9pbmZvIjtOO30=', 1568883435);
+('nGD0FpRXmb7lY2ib5rUwdCcPusTOSOwYwYEzjCtw', 'a53cca79-5b30-4375-b568-9f32e0492037', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36', 'YTo1OntzOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjY6Il90b2tlbiI7czo0MDoiSFJtUlBrOFJSVHcxaWR2VWZ0bEp0dVdHT3F5akxSWGlpUjE3S3JGdSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Njc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9ib29raW5ncy9lY2I3YWVjNy1iZDEyLTQwOTctOTZiMC1hMjZlNDQ1NzA5OGMiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7czozNjoiYTUzY2NhNzktNWIzMC00Mzc1LWI1NjgtOWYzMmUwNDkyMDM3IjtzOjEzOiJyZXNpZGVudF9pbmZvIjtOO30=', 1568969583);
 
 -- --------------------------------------------------------
 
@@ -3018,7 +3023,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `username`, `mobile_number`, `email`, `email_verified_at`, `password`, `role`, `remember_token`, `created_at`, `updated_at`) VALUES
-('9f081865-897c-4df9-a62a-30babbc4f0ef', 'Landley', 'landley', '1231231', 'landleydgreat@gmail.com', '2019-09-09 16:00:00', '$2y$10$7ovTse/AIOyaM9do4FTRfuKvhYcOgg0NCuEMvxYZ.IuylNoXcVONG', 'admin', NULL, '2019-09-03 18:48:49', '2019-09-03 18:48:49'),
+('a53cca79-5b30-4375-b568-9f32e0492037', 'Arleen Fatton', 'arleen123', '123123123', 'arleen123@gmail.com', NULL, '$2y$10$yUhtPL9CzvH.vjfp8hLDGu5K1Sz.8KO9blLsU9f5w6HrPfWoHKYuG', 'admin', NULL, '2019-09-19 19:29:18', '2019-09-19 19:29:18'),
 ('3e641f83-6af7-47eb-a773-a85fb13749ef', 'Mariam T.Mendoza\r\n', 'mariam123', '012312312309175170708/09228474939\r\n', 'maiyam88@hotmail.com\r\n', '2019-09-11 16:00:00', '$2y$10$CscjqgAD2WzBzp.K8gj/Z.1jwHT3Yoe1ZmXOETOHvHSRfFBgBVRUW', 'owner', NULL, '2019-09-08 23:02:22', '2019-09-08 23:02:22'),
 ('a446ae70-fd99-4501-b6ab-15332a83b05a', 'Aldrin Magno', 'aldrin123', '12312097098', 'leasingtreasury@marthaservices.com', '2019-09-11 16:00:00', '$2y$10$UBjSdRWsWiov5W.o0sHVR.J.5kZDGZWof/981/ETOWZQdDl5NWwPO', 'treasury', NULL, '2019-09-10 17:06:55', '2019-09-10 17:06:55'),
 ('b5b62f65-7345-4fec-a893-1150f1e267d3', 'Germin Orcales', 'germin123', '1212131231231090', 'leasingmanager@marthaservices.com', NULL, '$2y$10$GxsmARZU.LpI6oT80OyR4ecPz3U.yYjyyYhk8h4F0PDjSbRYB0ppO', 'manager', NULL, '2019-09-13 17:27:18', '2019-09-13 17:27:18'),
@@ -3240,7 +3245,8 @@ INSERT INTO `users` (`user_id`, `name`, `username`, `mobile_number`, `email`, `e
 ('50b8828b-fc2e-4447-8264-3c2250b4642a', 'Arnel Trinidad\r\n', 'yfG62jjDlH', NULL, NULL, NULL, '$2y$10$16I2gL2bvdSckL/JsWWsa.cZyzDBMjyo7cl9CcDbXOROAA3fXwPcy', 'owner', NULL, NULL, NULL),
 ('3a7e0343-2b35-4d4e-8e5a-33007e3fa013', 'Pamela Rose Regis', 'iH4Qx2H8ak', NULL, NULL, NULL, '$2y$10$eZNBCFTHiQEoYRCP65kqsej7VUDE5KnICVt7F1s6giqKKH81r6SCW', 'owner', NULL, NULL, NULL),
 ('f6105e98-ffbe-4fcc-bd5d-6b0140ce91ec', 'Winston Agcon', '6IKvvuZKU0', NULL, NULL, NULL, '$2y$10$REeW/tkEwSyIIzxvJf8QWOvJjirDVE5yG/nzAhU2BiTcnL9wNY/eC', 'owner', NULL, NULL, NULL),
-('a7d74513-8708-4698-9d25-f44e76317519', 'Daida Sagulo', 'GlHtzVeJff', NULL, NULL, NULL, '$2y$10$WBeybxUr2Vf.CrASwIoDhuC4SCeCKwJcDIr.Aniy.bwbS6sRSDxQ6', 'owner', NULL, NULL, NULL);
+('a7d74513-8708-4698-9d25-f44e76317519', 'Daida Sagulo', 'GlHtzVeJff', NULL, NULL, NULL, '$2y$10$WBeybxUr2Vf.CrASwIoDhuC4SCeCKwJcDIr.Aniy.bwbS6sRSDxQ6', 'owner', NULL, NULL, NULL),
+('d9f2f573-1111-4733-b3db-30dec16c856d', 'Landley bernardo', 'landley123', NULL, 'landley@sdsdf', NULL, '$2y$10$6zQNGnCAUj1kLNtmqtlsJ.qMIeFusGLjjvGUzhWXu/k/PVtSYf5tW', 'web admin', NULL, '2019-09-19 18:31:38', '2019-09-19 18:34:52');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

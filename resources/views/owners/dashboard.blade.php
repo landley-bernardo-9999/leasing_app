@@ -125,4 +125,6 @@
         </div>
     </div>
 </div>
+@include('layouts.owner-footer')
 @endsection
+

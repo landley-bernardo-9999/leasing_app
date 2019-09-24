@@ -20,6 +20,14 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <style media="screen">
+        .spinner{
+            position: relative;
+            margin-top: -25%;
+            z-index: 99999;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -80,6 +88,7 @@
         <main class="py-4">
             @include('notifications')
             @yield('content')
+          
         </main>
     </div>
 </body>

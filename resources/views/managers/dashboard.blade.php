@@ -17,7 +17,6 @@
         <?php $row_no = 1; ?>
         <tbody>
         @foreach ($bookings as $booking)
-       
         <tr>
             <th>{{ $row_no++ }}</th>
             <td><a href="bookings/{{ $booking->booking_id }}">{{ $booking->res_full_name }}</a></td>
@@ -33,15 +32,14 @@
                     <input type="hidden" name="action" id="action" value="approved">
                     <button class="btn btn-success" onclick="return confirm('Are you sure you want to perform this operation? ');" type="submit"><i class="fas fa-check"></i>&nbspApprove</button>
                 </form>
-               @endif
-
-               
+               @endif  
             </td>
         </tr>
-        
         @endforeach
         </tbody>
     </table>
    </div>
 </div>
+@include('footer')
 @endsection
+
