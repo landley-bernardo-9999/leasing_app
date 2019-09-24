@@ -26,4 +26,3 @@
 </div>
 @include('footer')
 @endsection
-
