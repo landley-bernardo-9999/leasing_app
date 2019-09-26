@@ -96,6 +96,14 @@
                             {{ \Carbon\Carbon::parse($booking->check_in_date)->format('d/m/Y').' - '.\Carbon\Carbon::parse($booking->check_out_date)->format('d/m/Y')}} 
                        </td>
                    </tr>
+                   <tr>
+                       <th>Term</th>
+                   </tr>
+                   <tr>
+                       <td>
+                           {{ $booking->booking_term }}
+                       </td>
+                   </tr>
                    @if($booking->booking_status != 'ACTIVE')
                    <tr>
                        <th>Actual Check Out Date</th>
@@ -114,14 +122,7 @@
                        </td>
                    </tr>
                     @endif
-                   <tr>
-                       <th>Term</th>
-                   </tr>
-                   <tr>
-                       <td>
-                           {{ $booking->booking_term }}
-                       </td>
-                   </tr>
+                   
                </table>
             </div>
              <div class="col-md-4">

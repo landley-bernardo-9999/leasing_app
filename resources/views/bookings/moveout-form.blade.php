@@ -20,12 +20,12 @@
             <td>
                 <select form="move_out_form" name="reason_for_moving_out" class="form-control" style="width:70%" required>
                     <option value="" selected>Select Reason</option>
-                    <option value="cancelled">Cancelled</option>
-                    <option value="delinquent">Delinquent</option>
-                    <option value="end_of_contract">End of Contract</option>
-                    <option value="force_majeure">Force Majeure</option>
-                    <option value="run_away">Run Away</option>
-                    <option value="unruly">Unruly</option>
+                    <option value="CANCELLED">Cancelled</option>
+                    <option value="DELINQUENT">Delinquent</option>
+                    <option value="END OF CONTRACT">End of Contract</option>
+                    <option value="FORCE MAJEURE">Force Majeure</option>
+                    <option value="RUN AWAY">Run Away</option>
+                    <option value="UNRULY">Unruly</option>
                 </select>
             </td>
         </tr>

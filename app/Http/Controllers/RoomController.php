@@ -17,13 +17,40 @@ class RoomController extends Controller
     public function index(Request $request)
     {
         if ($request->booking == null){
-            $harvard = Room::where('building', 'HARVARD')->orderBy('floor_no')->get(['room_id', 'room_no', 'room_status', 'room_wing']);
-            $princeton = Room::where('building', 'PRINCETON')->orderBy('floor_no')->get(['room_id', 'room_no', 'room_status', 'room_wing']);
-            $wharton = Room::where('building', 'WHARTON')->orderBy('floor_no')->get(['room_id', 'room_no', 'room_status', 'room_wing']);
+            
+            $harvard_ground_floor = Room::where('building', 'HARVARD')->where('floor_no','G')->orderBy('room_wing')->get();
+            $harvard_lower_ground_floor = Room::where('building', 'HARVARD')->where('floor_no','L')->orderBy('room_wing')->get();
+            $harvard_upper_ground_floor = Room::where('building', 'HARVARD')->where('floor_no','U')->orderBy('room_wing')->get();
+            $harvard_second_floor = Room::where('building', 'HARVARD')->where('floor_no','2')->orderBy('room_wing')->get();
+            $harvard_third_floor = Room::where('building', 'HARVARD')->where('floor_no','3')->orderBy('room_wing')->get();
+            $harvard_fourth_floor = Room::where('building', 'HARVARD')->where('floor_no','4')->orderBy('room_wing')->get();
+            $harvard_fifth_floor = Room::where('building', 'HARVARD')->where('floor_no','5')->orderBy('room_wing')->get();
+            $harvard_sixth_floor = Room::where('building', 'HARVARD')->where('floor_no','6')->orderBy('room_wing')->get();
+        
+
+           $princeton_ground_floor = Room::where('building', 'PRINCETON')->where('floor_no','G')->orderBy('floor_no')->get();
+           $princeton_lower_ground_floor = Room::where('building', 'PRINCETON')->where('floor_no','L')->orderBy('floor_no')->get();
+           $princeton_upper_ground_floor = Room::where('building', 'PRINCETON')->where('floor_no','U')->orderBy('floor_no')->get();
+           $princeton_second_floor = Room::where('building', 'PRINCETON')->where('floor_no','2')->orderBy('floor_no')->get();
+           $princeton_third_floor = Room::where('building', 'PRINCETON')->where('floor_no','3')->orderBy('floor_no')->get();
+           $princeton_fourth_floor = Room::where('building', 'PRINCETON')->where('floor_no','4')->orderBy('floor_no')->get();
+           $princeton_fifth_floor = Room::where('building', 'PRINCETON')->where('floor_no','5')->orderBy('floor_no')->get();
+           $princeton_sixth_floor = Room::where('building', 'PRINCETON')->where('floor_no','6')->orderBy('floor_no')->get();
+
+           $wharton_ground_floor = Room::where('building', 'WHARTON')->where('floor_no','G')->orderBy('floor_no')->get();
+           $wharton_second_floor = Room::where('building', 'WHARTON')->where('floor_no','2')->orderBy('floor_no')->get();
+           $wharton_third_floor = Room::where('building', 'WHARTON')->where('floor_no','3')->orderBy('floor_no')->get();
+           $wharton_fourth_floor = Room::where('building', 'WHARTON')->where('floor_no','4')->orderBy('floor_no')->get();
+           $wharton_fifth_floor = Room::where('building', 'WHARTON')->where('floor_no','5')->orderBy('floor_no')->get();
+           $wharton_sixth_floor = Room::where('building', 'WHARTON')->where('floor_no','6')->orderBy('floor_no')->get();
+           
 
             session(['booking' => 'false']);
 
-            return view('rooms.show-rooms', compact('harvard', 'princeton', 'wharton'));
+            return view('rooms.show-rooms', compact('harvard_lower_ground_floor','harvard_upper_ground_floor','harvard_ground_floor','harvard_first_floor', 'harvard_second_floor', 'harvard_third_floor', 'harvard_fourth_floor', 'harvard_fifth_floor', 'harvard_sixth_floor',
+            'princeton_lower_ground_floor','princeton_upper_ground_floor','princeton_ground_floor','princeton_second_floor', 'princeton_third_floor', 'princeton_fourth_floor', 'princeton_fifth_floor', 'princeton_sixth_floor',
+            'wharton_ground_floor','wharton_second_floor', 'wharton_third_floor', 'wharton_fourth_floor', 'wharton_fifth_floor', 'wharton_sixth_floor'
+                        ));
         }else{
             $rooms = Room::where('site', $request->site)
                      ->where('building', $request->building)

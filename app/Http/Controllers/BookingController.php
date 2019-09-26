@@ -382,6 +382,7 @@ class BookingController extends Controller
             $booking->booking_status = 'INACTIVE';
             $booking->save();
 
+
             for($i = 0; $i<$no_of_items; $i++){
                 $billing = new Billing();
                 $billing->desc =    $request->input('item'.$i);
@@ -390,6 +391,11 @@ class BookingController extends Controller
                 $billing->created_at = $request->actual_move_out_date;
                 $billing->save();
             }
+            
+            Room:: where('room_id', $booking->room_id_foreign)
+                ->update([
+                        'room_status' => 'VACANT'                    
+                    ]);
            
             return redirect('/bookings/'.$booking->booking_id)->with('success', 'Moveout has been processed!'); 
         }

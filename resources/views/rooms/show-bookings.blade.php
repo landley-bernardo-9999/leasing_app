@@ -99,7 +99,7 @@
               <table class="table table-striped">
                     <tr>
                       <th>Room No</th>
-                      <td>{{$room->room_no.' '.$room->room_wing }}</td>
+                      <td>{{ substr($room->building, 0, 1).'-'.$room->room_no.' '.substr($room->room_wing, 0, 1) }}</td>
                     </tr>
                     <tr>
                       <th>Enrollment Date</th>
