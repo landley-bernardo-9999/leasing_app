@@ -41,8 +41,18 @@
                         </tr>
                         @foreach ($rooms as $room)
                         <tr>
-                            <td><a href="/rooms/{{ $room->room_id }}">{{ $room->building.' '.$room->room_no.' '.$room->room_wing }}</td>
-                            <td>{{ $room->room_status }}</td>
+                            <td><a title="Open the room" href="/rooms/{{ $room->room_id }}">{{ $room->building.' '.$room->room_no.' '.$room->room_wing }}</td>
+                            <td> 
+                                @if($room->room_status == 'OCCUPIED')
+                                    <p class="btn-success">{{ $room->room_status }}</p>
+                                    @elseif($room->room_status == 'VACANT')
+                                    <p class="btn-danger">{{ $room->room_status }}</p>
+                                    @elseif($room->room_status == 'RESERVED')
+                                    <p class="btn-warning">{{ $room->room_status }}</p>
+                                    @else
+                                    <p class="btn-dark">{{ $room->room_status }}</p>
+                                @endif
+                            </td>
                         </tr>
                         @endforeach
                     </table>

@@ -126,7 +126,7 @@
 			</table>
 		</div>
         </div>
-        <p class="text-right" ><button form="move_out_form" type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn btn-primary"><i class="fas fa-arrow-right"></i>&nbspMove Out</button></p>
+        <p class="text-right" ><button form="move_out_form" type="submit" onclick="return confirm('Are you sure you want to perform this operation? ');" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i>&nbspCONFIRM MOVEOUT</button></p>
 </div>
 <br>
 @endsection

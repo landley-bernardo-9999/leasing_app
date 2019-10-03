@@ -31,6 +31,8 @@ class RoomController extends Controller
            $princeton_ground_floor = Room::where('building', 'PRINCETON')->where('floor_no','G')->orderBy('floor_no')->get();
            $princeton_lower_ground_floor = Room::where('building', 'PRINCETON')->where('floor_no','L')->orderBy('floor_no')->get();
            $princeton_upper_ground_floor = Room::where('building', 'PRINCETON')->where('floor_no','U')->orderBy('floor_no')->get();
+           $princeton_second_basement = Room::where('building', 'PRINCETON')->where('floor_no','2B')->orderBy('floor_no')->get();
+           $princeton_third_basement = Room::where('building', 'PRINCETON')->where('floor_no','3B')->orderBy('floor_no')->get();
            $princeton_second_floor = Room::where('building', 'PRINCETON')->where('floor_no','2')->orderBy('floor_no')->get();
            $princeton_third_floor = Room::where('building', 'PRINCETON')->where('floor_no','3')->orderBy('floor_no')->get();
            $princeton_fourth_floor = Room::where('building', 'PRINCETON')->where('floor_no','4')->orderBy('floor_no')->get();
@@ -48,7 +50,7 @@ class RoomController extends Controller
             session(['booking' => 'false']);
 
             return view('rooms.show-rooms', compact('harvard_lower_ground_floor','harvard_upper_ground_floor','harvard_ground_floor','harvard_first_floor', 'harvard_second_floor', 'harvard_third_floor', 'harvard_fourth_floor', 'harvard_fifth_floor', 'harvard_sixth_floor',
-            'princeton_lower_ground_floor','princeton_upper_ground_floor','princeton_ground_floor','princeton_second_floor', 'princeton_third_floor', 'princeton_fourth_floor', 'princeton_fifth_floor', 'princeton_sixth_floor',
+            'princeton_lower_ground_floor','princeton_upper_ground_floor','princeton_ground_floor','princeton_second_floor', 'princeton_third_floor', 'princeton_fourth_floor', 'princeton_fifth_floor', 'princeton_sixth_floor', 'princeton_second_basement', 'princeton_third_basement',
             'wharton_ground_floor','wharton_second_floor', 'wharton_third_floor', 'wharton_fourth_floor', 'wharton_fifth_floor', 'wharton_sixth_floor'
                         ));
         }else{

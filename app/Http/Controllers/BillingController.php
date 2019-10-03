@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Billing;
 use Illuminate\Http\Request;
+use DB;
 
 class BillingController extends Controller
 {
@@ -24,7 +25,32 @@ class BillingController extends Controller
      */
     public function create()
     {
-        //
+         $harvard_bookings = DB::table('bookings')
+        ->join('residents', 'res_id', 'res_id_foreign')
+        ->join('rooms', 'room_id', 'room_id_foreign')
+        ->where('booking_status', 'ACTIVE')
+        ->where('building', 'HARVARD')
+        ->orderBy('res_full_name')
+        ->get();
+
+         $princeton_bookings = DB::table('bookings')
+        ->join('residents', 'res_id', 'res_id_foreign')
+        ->join('rooms', 'room_id', 'room_id_foreign')
+        ->where('booking_status', 'ACTIVE')
+        ->where('building', 'PRINCETON')
+        ->orderBy('res_full_name')
+        ->get();
+
+        $wharton_bookings = DB::table('bookings')
+        ->join('residents', 'res_id', 'res_id_foreign')
+        ->join('rooms', 'room_id', 'room_id_foreign')
+        ->where('booking_status', 'ACTIVE')
+        ->where('building', 'WHARTON')
+        ->orderBy('res_full_name')
+        ->get();
+
+
+        return view('billing_and_collection.create-billing', compact('harvard_bookings', 'princeton_bookings', 'wharton_bookings'));
     }
 
     /**
@@ -35,7 +61,7 @@ class BillingController extends Controller
      */
     public function store(Request $request)
     {
-      //
+      dd('create-billing');
     }
 
     /**

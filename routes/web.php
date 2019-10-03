@@ -22,7 +22,7 @@ Route::get('/', function () {
     else{
         if(auth()->user()->role === 'admin'){
             $rooms = Room::all();
-            $bookings = App\Booking::all();
+            $bookings = App\Booking::where('booking_status', 'ACTIVE')->get();
             $owners = App\User::where('role', 'owner')->get();
 
             $occupied_rooms_harvard =Room::where('building', 'HARVARD')->where('room_status', 'OCCUPIED')->count();
@@ -68,17 +68,18 @@ Route::get('/', function () {
            ->join('residents', 'bookings.res_id_foreign', 'residents.res_id')
            ->join('rooms','bookings.room_id_foreign', 'rooms.room_id')
            ->where('requested_at','!=', NULL)
-           
            ->get();
 
             return view('managers.dashboard', compact('bookings'));
         }elseif(auth()->user()->role === 'web admin'){
-
             $users = App\User::all();
-
             $sessions = DB::table('sessions')->whereNotNull('user_id')->get();
 
             return view('web_admin.dashboard', compact('users', 'sessions'));
+        }elseif(auth()->user()->role === 'billing'){
+
+
+            return view('billing_and_collection.dashboard');
         }
 
     }

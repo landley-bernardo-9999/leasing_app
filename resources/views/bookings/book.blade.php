@@ -1,17 +1,19 @@
 @extends('layouts.app')
-@section('title', 'Book')
+@section('title', 'Filter Rooms')
 @section('content')
-<div class="container">
-    <form action="/rooms" method="GET">
+<div class="container card p-3">
+    <br><br>
+    <form id="filter-rooms" action="/rooms" method="GET">
         {{ csrf_field() }}
+    </form>
     <div class="row">
         <div class="col-md-4">
-            <label class="text-primary" for="">Site</label>
+            <label class="" for=""><span class="text-danger">*</span> Site</label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-city"></i></span>
                 </div>
-                <select class="form-control" name="site" id="site" >
+                <select form="filter-rooms" class="form-control" name="site" id="site" required>
                     @if(session('site') == NULL)
                     <option value=""><small id="" class="form-text text-muted">...</small></option>
                     @foreach ($site as $row)
@@ -29,14 +31,14 @@
         </div>
 
         <div class="col-md-5">
-            <label for="" class="text-primary">Building/Floor</label>
+            <label for="" class="">Building/Floor <span class="text-danger">(optional)</span></label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-store-alt"></i></span>
                 </div>
                 
                
-                <select class="form-control" name="building" id="building" >
+                <select form="filter-rooms" class="form-control" name="building" id="building" >
                     @if(session('building') == NULL)
                     <option value=""><small id="" class="form-text text-muted">...</small></option>
                     @foreach ($building as $row)
@@ -53,7 +55,7 @@
                 </select>
                 
 
-               <select class="form-control" name="floor_no" id="floor_no" >
+               <select form="filter-rooms" class="form-control" name="floor_no" id="floor_no" >
                     <option value="{{ session('floor_no') }}"  selected>{{ session('floor_no') }} floor</option>
                     <option value=""><small id="" class="form-text text-muted">...</small></option>
                     @foreach ($floor_no as $row)
@@ -65,12 +67,12 @@
 
 
         <div class="col-md-3">
-            <label for="" class="text-primary">Type of Bed</label>
+            <label for="" class="">Type of Bed <span class="text-danger">(optional)</span></label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="fas fa-bed"></i></span>
                 </div>
-               <select class="form-control" name="type_of_bed" id="type_of_bed" >
+               <select form="filter-rooms" class="form-control" name="type_of_bed" id="type_of_bed" >
                     <option value="{{ session('type_of_bed') }}"  selected>{{ session('type_of_bed') }}</option>
                     <option value=""><small id="" class="form-text text-muted">...</small></option>
                     @foreach ($type_of_bed as $row)
@@ -80,26 +82,26 @@
             </div>
         </div>
     </div>
-    <br>
+    <br><br>
     <div class="row">
         <div class="col-md-5">
-            <label class="text-primary" for="">Check In Date-Check Out Date:</label>
+            <label class="" for="">Check In Date-Check Out Date <span class="text-danger">(optional)</span></label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1"><i class="far fa-calendar-alt"></i></span>
                 </div>
-               <input class="form-control" type="date" name="check_in_date" id="check_in_date" value="{{ session('check_in_date') }}">
-               <input class="form-control" type="date" name="check_out_date" id="check_out_date" value="{{ session('check_out_date') }}">
-               <input class="form-control" type="hidden" name="booking" id="booking" value="true">
+               <input form="filter-rooms" class="form-control" type="date" name="check_in_date" id="check_in_date" value="{{ session('check_in_date') }}">
+               <input form="filter-rooms" class="form-control" type="date" name="check_out_date" id="check_out_date" value="{{ session('check_out_date') }}">
+               <input form="filter-rooms" class="form-control" type="hidden" name="booking" id="booking" value="true">
             </div>        
         </div>      
     </div>
     <br>
-    <div class="row">
+     <div class="row">
         <div class="col-md-12">
-            <button class="btn text-right btn-primary" type="submit"><i class="fas fa-search"></i> Search</button>
+            <p class="text-right"><button form="filter-rooms" class="btn btn-primary" type="submit"><i class="fas fa-search"></i> &nbspFilter Rooms</button></p>
         </div>
     </div>
-</form>
 </div>
+
 @endsection

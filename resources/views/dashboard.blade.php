@@ -6,10 +6,10 @@
         <div class="col-sm-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Rooms</h5>
+                    <h5 class="card-title text-center">Enrolled Rooms</h5>
                     <h1 class="card-text text-center">{{ $rooms->count() }}</h1>
-                    <a href="/bookings" class="text-left">Book</a>
-                    <a href="/rooms" class="text-right">Manage</a>
+                    <a class="btn btn-primary" href="/bookings"><i class="fas fa-plus-circle"></i> &nbspCreate Booking</a>
+                    <a class="btn btn-primary" href="/rooms"><i class="fas fa-tasks"></i> &nbspManage Rooms</a>
                 </div>    
             </div>
         </div>
@@ -17,9 +17,9 @@
         <div class="col-sm-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Bookings</h5>
+                    <h5 class="card-title text-center">Active Bookings</h5>
                     <h1 class="card-text text-center">{{ $bookings->count() }}</h1>
-                    <a href="/residents" class="text-center">Open</a>
+                    <a class="btn btn-primary" href="/residents"><i class="fas fa-tasks"></i> &nbspManage Bookings</a>
                 </div>
             </div>
         </div>
@@ -27,9 +27,9 @@
         <div class="col-sm-4">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Owners</h5>
+                    <h5 class="card-title text-center">Unit Owners</h5>
                     <h1 class="card-text text-center">{{ $owners->count() }}</h1>
-                    <a href="/users" class="text-center">Open</a>
+                    <a class="btn btn-primary" href="/users"><i class="fas fa-tasks"></i> &nbspManage Unit Owners</a>
                 </div>
             </div>
         </div>
@@ -38,7 +38,7 @@
     <div class="row">
         <div class="col-md-12">
             <h4>Dashboard</h4>
-            <table class="table">
+            <table class="table table-striped">
                     <tr>
                         <th></th>
                         <td>Occupied</td>

@@ -31,7 +31,7 @@
     
         <div class="row">
             <div class="col-md-4">
-                <h4>Resident Information</h4>
+                <h4>Client Information</h4>
                <table class="table-borderless">
                    <tr>
                        <th>Full Name</th>
@@ -97,7 +97,7 @@
                        </td>
                    </tr>
                    <tr>
-                       <th>Term</th>
+                       <th>Contract Duration</th>
                    </tr>
                    <tr>
                        <td>

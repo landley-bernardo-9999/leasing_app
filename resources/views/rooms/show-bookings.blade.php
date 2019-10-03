@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row">
-            <a href="#/" data-toggle="modal" data-target="#exampleModalLong">
-                {{ $room->building.' '.$room->room_no.' '.$room->room_wing }}
-            </a>
+           <p><a class="" href="#/" data-toggle="modal" data-target="#exampleModalLong"><i title="See room information" class="fas fa-info-circle"></i> </a>
+            {{ $room->building.' '.$room->room_no.' '.$room->room_wing }}
+        </p>
             @if(auth()->user()->role === 'admin')
                 <table class="table table-striped">
                     <thead>
@@ -14,7 +14,7 @@
                         <th>Name</th>
                         <th>Mobile</th>
                         <th>Status</th>
-                        <th>Contract</th>
+                        <th>Contract Duration</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -54,7 +54,7 @@
                     <th>Name</th>
                     <th>Check In- Check out</td>
                     <th>Status</th>
-                    <th>Contract  </th>
+                    <th>Contract Duration </th>
                     <th>Move Out Reason</th>
                 </tr>
                 </thead>
@@ -96,7 +96,7 @@
               </button>
             </div>
             <div class="modal-body">
-              <table class="table table-striped">
+              <table class="table table-striped table-hover">
                     <tr>
                       <th>Room No</th>
                       <td>{{ substr($room->building, 0, 1).'-'.$room->room_no.' '.substr($room->room_wing, 0, 1) }}</td>
@@ -112,16 +112,16 @@
                     </tr>
                     @endforeach
                     <tr>
+                        <th>Site</th> 
+                        <td>{{ $room->site}}</td>
+                    </tr>
+                    <tr>
+                        <th>Building</th> 
+                        <td>{{ $room->building}}</td>
+                        </tr>
+                    <tr>
                       <th>Floor No</th> 
                       <td>{{ $room->floor_no}}</td>
-                    </tr>
-                    <tr>
-                      <th>Building</th> 
-                      <td>{{ $room->building}}</td>
-                    </tr>
-                    <tr>
-                      <th>Site</th> 
-                      <td>{{ $room->site}}</td>
                     </tr>
                     <tr>
                       <th>Dimension</th> 
@@ -152,9 +152,6 @@
                       <td>{{ $room->room_description}}</td>
                     </tr>
               </table>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>

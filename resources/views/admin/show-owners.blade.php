@@ -23,7 +23,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-striped">
+            <table class="table table-striped table-hover">
             <thead>
             <tr>
                 <th>#</th>
@@ -44,7 +44,17 @@
                 <td>{{ $owner->email }}</td>
                 <td>{{ $owner->mobile_number }}</td>
                 <td>{{ substr($owner->building, 0, 1).'-'.$owner->room_no.' '.substr($owner->room_wing, 0, 1) }}</td>
-                <td>{{ $owner->room_status }}</td>
+                <td> 
+                    @if($owner->room_status == 'OCCUPIED')
+                    <p class="btn-success">{{ $owner->room_status }}</p>
+                    @elseif($owner->room_status == 'VACANT')
+                    <p class="btn-danger">{{ $owner->room_status }}</p>
+                    @elseif($owner->room_status == 'RESERVED')
+                    <p class="btn-warning">{{ $owner->room_status }}</p>
+                    @else
+                    <p class="btn-dark">{{ $owner->room_status }}</p>
+                    @endif
+                </td>
             
             </tr>
             
